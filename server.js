@@ -13,10 +13,11 @@ export default async function handler(req, res) {
 
 const getUsers = async (req, res) => {
   try {
+    var correo = 'dfdfd';
     const result = await conn.query('SELECT * FROM users');
-    return res.status(200).json(results);
+    return res.status(200).json(result);
   } catch (error) {
-    return res.status(500).json(results);
+    return res.status(500).json(result);
   }
 };
 

@@ -4,7 +4,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import { Button, Pane, Text, TextInput, Card, Strong, TextInputField } from 'evergreen-ui';
 
-function Login(){
+function Register(){
   const router = useRouter();
 
   const handleSubmit = async (e) => {
@@ -13,7 +13,7 @@ function Login(){
         if(event.target.password.value !== event.target.repassword.value){
           throw 'Contraseñas diferentes'
         }else {
-          const res = await fetch('api/user', {
+          const res = await fetch('api/userRegister', {
             body:JSON.stringify({
               name: event.target.name.value,
               lastName: event.target.lastName.value,
@@ -73,4 +73,4 @@ function Login(){
   );
 }
 
-export default Login
+export default Register

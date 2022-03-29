@@ -7,13 +7,12 @@ const jwt = require('jsonwebtoken');
 export default async function handler(req, res) {
   switch (req.method) {
     case 'GET':
-      return await loadUserInfo(req, res);
+      return await loadTravelsForTickets(req, res);
     case 'POST':
-      return await userLogin(req, res);
+      return await createTravel(req, res);
     default:
       return res.status(400).send('Method not allowed');
   }
-
 }
 
 function generateToken(data) {
@@ -99,23 +98,26 @@ const userLogin = async (req, res) => {
   }
 };
 
-const loadUserInfo = async (req, res) => {
+const createTravel = async (req, res) => {
   try {
-    //console.log('intentando autorizar')
-    //Verificar inicio de sesion
-    const authHeader = req.headers['authorization'];
-    //Obtenemos token
-    const token = authHeader && authHeader.split(' ')[1];
-    //console.log(token);
-    if(token == null) return res.status(500).json({ message: 'Inicia sesion pls :P'}); //deberia ser 403
-    //Validamos token y expiracion??
-    if(!validateToken(token)){
-      //retorna datos de usuario
-      return res.status(200).json({ message: 'Bienvenido', code:200, data:token});
-    }else {
-      return res.status(500).json({ message: 'Token inválido', code:500});
-    }
+    const { info, semana } = req.body;
+    const { origen, destino, costoViaje, limitePasajeros, horaSalida } = info;
+    const dias = JSON.stringify(semana);
+    //console.log(dias);
+    //Faltan validaciones en BD //Si es que ya existe
+    //Insertamos nuevo viaje
+    const result = conn.query('INSERT INTO travels SET ?', {
+      origen,
+      destino,
+      costoViaje,
+      limitePasajeros,
+      horaSalida,
+      dias,
+    });
+    conn.end();
+    //console.log(results);
+      return res.status(200).json({ message: 'Viaje creado', code:200});
   } catch (error) {
-      return res.status(500).json({ message: 'Error: '+error, code:500});
+      return res.status(500).json({ message: ' '+error, code:500});
   }
 };

@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/router';
-import { Button, Pane, Text, TextInput, Card, Strong } from 'evergreen-ui';
+import { Button, Pane, Text, TextInput, Card, Strong, toaster } from 'evergreen-ui';
 import { getCookies, getCookie, setCookies, removeCookies } from 'cookies-next';
 
 function Login(){
@@ -24,17 +24,17 @@ function Login(){
           const result = await res.json();
 
           if(result.code === 500){
-            toast.error(result.message)
+            toaster.danger(result.message)
           }else if (result.code == 200) {
             //Generamos cookie con el token de respuesta
             setCookies('token', result.data);
             console.log(result.data)
-            toast.success(result.message);
+            toaster.success(result.message);
             //Re-dirigimos a panel de usuario
             router.push('/userPanel');
           }
     } catch (error) {
-      toast.error(error.message);
+      toaster.danger(error.message);
     }
   };
 
@@ -47,9 +47,9 @@ function Login(){
         {/*Title*/}
         <Strong size={600} marginTop={10}>Login</Strong>
         {/*Input Email*/}
-        <TextInput name='email' placeholder='Email' marginTop={50} />
+        <TextInput name='email' placeholder='Email' marginTop={50} required/>
         {/*Input Password*/}
-        <TextInput name='password' placeholder='Password' marginTop={10} />
+        <TextInput name='password' placeholder='Password' marginTop={10} type='password' required/>
         {/*Login Button*/}
         <Button appearance='primary' marginTop={35} type='submit'>Enter</Button>
       </Card>

@@ -1,8 +1,6 @@
 import {useState, useEffect} from 'react';
-import axios from 'axios';
-import toast, { Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/router';
-import { Button, Pane, Text, TextInput, Card, Strong, TextInputField } from 'evergreen-ui';
+import { Button, Pane, Text, TextInput, Card, Strong } from 'evergreen-ui';
 
 function Register(){
   const router = useRouter();
@@ -50,7 +48,7 @@ function Register(){
       {/*Login form*/}
         <Card elevation={1} height={500} width='100%' border="default" padding={30} display='flex' flexDirection='column' alignItems='center'>
           {/*Title*/}
-              <Strong size={600} marginTop={10}>Register</Strong>
+              <Strong size={600} marginTop={10}>Registro</Strong>
               {/*Input Name*/}
               <TextInput name='name' placeholder='Name' type='text' maxLength='15' marginTop={40} title='Ingrese solo létras' required pattern='[a-zA-Z]{1,15}' />
               {/*Input Last name*/}
@@ -65,10 +63,9 @@ function Register(){
               <TextInput name='password' placeholder='Password' type='password' minLength='8' maxLength='10' marginTop={10} required  />
               <TextInput name='repassword' placeholder='Repeat Password' type='password' minLength='8' maxLength='10' marginTop={10} required />
               {/*Login Button*/}
-              <Button appearance='primary' display='flex' marginTop={20} type='submit'>Send</Button>
+              <Button appearance='primary' display='flex' marginTop={30} type='submit'>Enviar</Button>
         </Card>
       </form>
-      <Toaster />
     </Pane>
   );
 }

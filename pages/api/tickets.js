@@ -66,20 +66,17 @@ const buscarViajes = async (req, res) => {
     //console.log('Intentamos buscar viaje')
     try {
       //Obtiene los datos de formulario
-      const {origen, destino, horaSalida, fecha} = req.body;
-      //Se encripta la contraseña con bcrypt
-      //var hash = await bcrypt.hash(password, 10);
-      //Query para buscar email en BD
+      const {origen, destino, fecha} = req.body;
+      //Query para buscar todos los viajes que tienen el mismo origen y destino seleccionado por el usuario
       let results = await conn.query('SELECT * FROM travels WHERE origen = ? && destino = ?', [origen, destino]);
       const stringdata = JSON.stringify(results);
       const parsedata = JSON.parse(stringdata);
       conn.end();
-      //console.log(checkDiaViaje(parsedata, fecha.diaSemana));
       //Si hay resultados
       if(parsedata.length>0){
           //Verificamos que hay viajes ese dia de la semana
           if(checkDiaViaje(parsedata, fecha.diaSemana)){
-            return res.status(200).json({ message:'Encontramos Viajes', code:200, data: parsedata});
+            return res.status(200).json({ message:'Viajes encontrados!!', code:200, data: parsedata});
           }else {
             return res.status(500).json({ message: 'No se encontrarón pasajes con los valores ingresados', code:500});
           }
@@ -89,7 +86,7 @@ const buscarViajes = async (req, res) => {
       }
     } catch (error) {
       //Cualquier otro error
-        return res.status(500).json({ message: ' '+error, code:500});
+        return res.status(500).json({ message: `${error}`, code:500});
     }
 };
 

@@ -83,7 +83,7 @@ const userLogin = async (req, res) => {
               //Inicia sesion, se genera token, guarda token y se redirige a panel de usuario?
               //Enviamos token con los datos del usuario
               //res.cookie('token', generateToken(parsedata[0]), {maxAge: 300 * 1000});
-              return res.status(200).json({ message:'Ya registrado entonces logeamos', code:200, data: generateToken(parsedata[0])});
+              return res.status(200).json({ message:'Validando datos...', code:200, data: generateToken(parsedata[0])});
             }else {
               //Pasword y hash distintos
               return res.status(500).json({ message:'Contraseña incorrecta', code:500});

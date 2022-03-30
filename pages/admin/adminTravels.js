@@ -1,8 +1,7 @@
 import {useState, useEffect} from 'react';
-import axios from 'axios';
-import toast, { Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/router';
-import { Button, Pane, Text, TextInput, Card, Strong, TextInputField, Checkbox, FormField, toaster } from 'evergreen-ui';
+import { Button, Pane, Text, TextInput, Card, Strong, TextInputField, Checkbox, FormField, toaster } from 'evergreen-ui'
+import { getCookies, getCookie, setCookies, removeCookies } from 'cookies-next'
 
 
 function Travels(){
@@ -56,10 +55,14 @@ function Travels(){
   const handleCB = async (e) => {
     setSemana({...semana, [e.target.name]:e.target.checked})
   };
-
   const handleDatos = async (e) => {
     setDatosViaje({...datosViaje, [e.target.name]:e.target.value})
   };
+
+  useEffect(() => {
+    const token = getCookie('token');
+    if(!token) {router.push('/login')}
+  }, []);
 
   return (
     //Login container
@@ -97,7 +100,6 @@ function Travels(){
               <Button appearance='primary' display='flex' marginTop={10} type='submit'>Crear</Button>
         </Card>
       </form>
-      <Toaster />
     </Pane>
   );
 }

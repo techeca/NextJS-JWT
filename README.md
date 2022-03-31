@@ -1,5 +1,3 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 ## Getting Started
 
 Instalar dependencias
@@ -7,6 +5,8 @@ Instalar dependencias
 ```bash
 npm i
 ```
+
+Para pruebas locales
 
 ```bash
 npm run dev
@@ -18,10 +18,16 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Páginas
 
-`/` - Página principal
+`/` - Home
 `/user` - Panel con información de usuario logeado, en caso de no estar logeado redirige a login.
 `/admin` - Formulario para crear nuevos Viajes.
 `/buyTicket` Formulario para buscar viajes y ver sus detalles.
+`/login` - Ya tu sabes
+`/register` - Tambien sabes
+
+## Base de Datos MySQL
+
+La base de datos está alojada en Amazon RDS
 
 ## Otros
 
@@ -37,11 +43,14 @@ database: ''
 
 ## TODO
 
-## Learn More
+Middleware
+Función de compra
+Mover variables para encriptar token
 
-To learn more about Next.js, take a look at the following resources:
+## More
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- [Next.js](https://nextjs.org/docs)
+- [Evergreen](https://evergreen.segment.com)
+- [Datepicker](https://reactdatepicker.com)
+- [react-device-detect](https://github.com/duskload/react-device-detect)
+- [ServerlessMySQL](https://github.com/jeremydaly/serverless-mysql)

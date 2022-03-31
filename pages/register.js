@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import { useRouter } from 'next/router';
-import { Button, Pane, Text, TextInput, Card, Strong } from 'evergreen-ui';
+import { Button, Pane, Text, TextInput, Card, Strong, toaster } from 'evergreen-ui';
 
 function Register(){
   const router = useRouter();
@@ -28,16 +28,15 @@ function Register(){
           const result = await res.json()
 
           if(result.code === 500){
-            toast.error(result.message)
+            toaster.danger(result.message)
           }else if (result.code == 200) {
-            toast.success(result.message);
+            toaster.success(result.message);
             router.push('/login');
           }
           //router.push("/login");
-
         }
     } catch (error) {
-      toast.error(error.message);
+      toaster.danger(error.message);
     }
   };
 

@@ -4,10 +4,10 @@ import mysql from 'serverless-mysql';
 const conn = mysql({
   config: {
     host: 'localhost',
-    user: 'root',
-    password: '',
+    user: 'id17438265_admin',
+    password: '2&%J~hjKpwLdpMue',
     port: 3306,
-    database: 'busystem'
+    database: 'id17438265_userdb'
   }
 });
 

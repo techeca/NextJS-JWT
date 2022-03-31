@@ -30,8 +30,8 @@ function Tickets(){
 
   const [travels, setTravels] = useState('');  //viajes obtenidos despues de la busqueda
   const [origenSelec, setOrigenSelec] = useState(''); //falta implementar // al seleccionar un origen se debe buscar los destino disponibles // actualmente origen y destino vienen del mismo resultado
-  const [travelSelected, setTravelSelected] = useState ('');
-  const [controlTravelInfo, setControlTravelInfo] = useState (false);
+  const [travelSelected, setTravelSelected] = useState({info:'', fecha:''});
+  const [controlTravelInfo, setControlTravelInfo] = useState(false);
 
   const handleLoad = async (e) => {
       //Intentamos obtener origenes disponibles
@@ -101,7 +101,9 @@ function Tickets(){
   };
 
   function showTravelDetail(travel){
-    setTravelSelected(travel);
+    travelSelected.info = travel;
+    parseFechaNorm(startDate.getDate(), startDate.getMonth(), startDate.getFullYear());
+    //setTravelSelected(travel);
     setControlTravelInfo(true);
   }
   function hideTravelDetail(){
@@ -126,6 +128,14 @@ function Tickets(){
     if(nombreDia === 5){fecha.diaSemana = 'viernes'}
     if(nombreDia === 6){fecha.diaSemana = 'sabado'}
     if(nombreDia === 0){fecha.diaSemana = 'domingo'}
+
+  }
+  function parseFechaNorm(dia, mes, ano){
+    var diaN = dia.toString()
+    var mesN = mes+1
+    if(dia < 10){diaN = `0${diaN}`}else{diaN = dia}
+    if(mes < 10){mesN = `0${mesN}`}else{mesN = mes}
+    travelSelected.fecha = `${diaN}`+`${mesN}`+`${ano}`
   }
   function TableTickets(dataTravel){
     //console.log(travels);
@@ -163,7 +173,7 @@ function Tickets(){
         </Pane>
         <Pane flex="1" overflowY="scroll" background="tint1" padding={16}>
           <Card backgroundColor="white" elevation={0} height='auto' width='auto'>
-            {controlTravelInfo ? <TravelDetail travelData={travelSelected} /> : TableTickets(travels)}
+            {controlTravelInfo ? <TravelDetail travelData={travelSelected}/> : TableTickets(travels)}
           </Card>
         </Pane>
       </SideSheet>

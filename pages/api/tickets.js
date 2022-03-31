@@ -48,7 +48,7 @@ function checkDiaViaje(data, diaSerch){
   var checkDia = false;
   data.map((viaje) => {test.push(viaje['dias'])})
   //Buscamos si hay pasajes comparando el dia seleccionado del calendario //se convierte a dia de semana
-  //Y se compara para ver si hay viajes ese dia de la semana //lunes, martes, miercoles, etc...
+  //Y se compara con los viajes de BD para ver si hay viajes con ese dia de la semana //lunes, martes, miercoles, etc...
   test.map((dia) => {
     if(JSON.parse(dia)[`${diaSerch}`]){
       //console.log('pasaje encontrado');

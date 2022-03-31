@@ -23,7 +23,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 `/admin` - Formulario para crear nuevos Viajes.\
 `/buyTicket` Formulario para buscar viajes y ver sus detalles.\
 `/login` - Ya tu sabes\
-`/register` - Tambien sabes\
+`/register` - Tambien sabes
 
 ## Base de Datos MySQL
 
@@ -88,7 +88,7 @@ database: ''
 
 Middleware \
 Función de compra \
-Mover variables para encriptar token \
+Mover variables para encriptar token 
 
 ## More
 

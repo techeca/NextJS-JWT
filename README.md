@@ -27,6 +27,12 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Base de Datos MySQL
 
+New DB
+
+```bash
+CREATE DATABASE busystem;
+```
+
 users
 
 ```bash
@@ -88,7 +94,7 @@ database: ''
 
 Middleware \
 Función de compra \
-Mover variables para encriptar token 
+Mover variables para encriptar token
 
 ## More
 

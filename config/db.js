@@ -5,7 +5,7 @@ const conn = mysql({
   config: {
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: 'yGuIqsAlxNT',
     port: 3306,
     database: 'busystem'
   }

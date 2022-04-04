@@ -8,6 +8,8 @@ import Image from 'next/image'
 import asientoBlank from '../../public/iconseat.png'
 import asientoSelec from '../../public/iconseatSelected.png'
 import DatePicker, {registerLocale} from 'react-datepicker'
+import {useAppContext} from '../state'
+import { getCookies, getCookie, setCookies, removeCookies } from 'cookies-next'
 
 function setHourPoint(hour){
   const str = hour.toString().slice(0, 2)+':'+hour.toString().slice(2, 4);
@@ -20,14 +22,17 @@ function TravelDetail(travelData){
   const [seatControl, setSeatControl] = useState(Array(40));
   const [seatSelected, setSeatSelected] = useState('');
   const [fechaSelect, setFechaSelect] = useState('');
+  const [code, setCode] = useState('');
   const handleLoad = async (e) => {
       //Intentamos obtener origenes disponibles
     try {
+            const travelInfo = travelData.travelData.info;
+            const travelFecha = travelData.travelData.fecha;
             //Guarda datos recibidos
-            setDataTravel(travelData.travelData.info);
-            setFechaSelect(travelData.travelData.fecha);
+            setDataTravel(travelInfo);
+            setFechaSelect(travelFecha);
+            setCode(travelData.travelData.code);
             ///setFechaSelect(prueba);
-            console.log(travelData.travelData);
 
     } catch (error) {
       toaster.danger(error.message);
@@ -61,6 +66,16 @@ function seleccionarAsiento(i){
   }else {
     setSeatSelected(i);
   }
+}
+function prueba(){
+  //console.log(travelData.pruebatest);
+  //enviamos el pasajes que quiere el usuario
+  var newN = seatSelected+1;
+  console.log(newN)
+  const codePasaje = `${newN}${dataTravel.origen.slice(0, 3)}${dataTravel.destino.slice(0, 3)}${dataTravel.horaSalida}${fechaSelect}`;
+  setCode(codePasaje);
+  travelData.parentCallBack(dataTravel, fechaSelect, seatSelected+1, codePasaje);
+  //console.log(getCookie('pasajes'))
 }
 
   useEffect(() => {
@@ -106,7 +121,7 @@ function seleccionarAsiento(i){
             </Pane>
           </Card>
         </Pane>
-         <Card elevation={1} alignItems='center' display='flex' height={'100%'} width={'90%'} marginLeft={28} marginTop={20} flexDirection='column'>
+         <Card elevation={1} alignItems='center' display='flex' height={'75%'} width={'90%'} marginLeft={28} marginTop={20} flexDirection='column'>
           <Strong size={600} marginTop={20} marginBottom={30}>Seleccione un Asiento disponible</Strong>
 
                <Pane display='flex' justifyContent='space-around'>
@@ -120,12 +135,10 @@ function seleccionarAsiento(i){
                 <Pane display='flex' flexDirection='column' alignItems='center'>
                   <Text marginTop={40}>Nº seleccionado</Text>
                   <Heading color='muted' size={900} marginTop={10}>{seatSelected === '' ? 0 : seatSelected+1}</Heading>
-                  <Button appearance='primary' marginTop={330}>Comprar</Button>
+                  <Button appearance='primary' marginTop={330} onClick={() => prueba()}>Agregar</Button>
                   <Button appearance='primary' iconAfter={ArrowLeftIcon} intent='danger' marginTop={10}>Volver</Button>
                 </Pane>
                </Pane>
-
-
          </Card>
       </Pane>
     )}

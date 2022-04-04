@@ -8,6 +8,7 @@ import es from  'date-fns/locale/es'
 import Navbar from './components/navbar'
 import LoadingComp from './components/loading'
 import TravelDetail from './viajes/travelDetail'
+import TicketsOrder from './viajes/ticketsOrder'
 import { UserIcon, LogOutIcon, HomeIcon, AirplaneIcon } from 'evergreen-ui'
 registerLocale('es', es);
 
@@ -30,8 +31,9 @@ function Tickets(){
 
   const [travels, setTravels] = useState('');  //viajes obtenidos despues de la busqueda
   const [origenSelec, setOrigenSelec] = useState(''); //falta implementar // al seleccionar un origen se debe buscar los destino disponibles // actualmente origen y destino vienen del mismo resultado
-  const [travelSelected, setTravelSelected] = useState({info:'', fecha:''});
-  const [controlTravelInfo, setControlTravelInfo] = useState(false);
+  const [travelSelected, setTravelSelected] = useState({info:'', fecha:'', nroAsiento:'', code:''});  //Guardar la seleccion del usuario y lo envia al componente travel
+  const [controlTravelInfo, setControlTravelInfo] = useState(false); //Controla si es que muestra Los viajes (despues de filtro) o el detalle del viaje seleccionado
+  const [carritoTickets, setCarritoTickets] = useState([]); //Guarda los pasajes que quiere comprar el usuario
 
   const handleLoad = async (e) => {
       //Intentamos obtener origenes disponibles
@@ -99,6 +101,32 @@ function Tickets(){
       toaster.danger(error.message);
     }
   };
+  const handleCallBack = async (e, f, g, h) =>{
+    //validamos que no existan mas de 5 Pasajes //contamos desde 0
+    if(carritoTickets.length > 3){
+      toaster.danger('Carrito lleno!')
+    }else {
+      //todavia tenemos espacio
+      //console.log(e, f, g);
+      const newTicket = {info:'', fecha:'', nroAsiento:'', code:''};
+      newTicket.info = e;
+      newTicket.fecha = f;
+      newTicket.nroAsiento = g;
+      newTicket.code = h;
+      const newCarr = carritoTickets;
+      newCarr.push(newTicket);
+      setCarritoTickets(newCarr);
+      setControlTravelInfo(false);
+      setIsShown(false);
+      setLoadingList(true);
+      toaster.success('Pasaje agregado')
+    }
+
+  }
+  const rmvElmt = async (carritoTry) => {
+    const neeCarr = carritoTry;
+    setCarritoTickets(neeCarr);
+  }
 
   function showTravelDetail(travel){
     travelSelected.info = travel;
@@ -173,11 +201,14 @@ function Tickets(){
         </Pane>
         <Pane flex="1" overflowY="scroll" background="tint1" padding={16}>
           <Card backgroundColor="white" elevation={0} height='auto' width='auto'>
-            {controlTravelInfo ? <TravelDetail travelData={travelSelected}/> : TableTickets(travels)}
+            {controlTravelInfo ? <TravelDetail travelData={travelSelected} parentCallBack={handleCallBack}/> : TableTickets(travels)}
           </Card>
         </Pane>
       </SideSheet>
     )
+  }
+  function prueba(){
+    carritoTickets.push(travelSelected)
   }
 
   useEffect(() => {
@@ -188,26 +219,42 @@ function Tickets(){
       <>
       {isLoading ? <LoadingComp /> :(
         <>
+        {/*Navbar*/}
         <Pane display='flex' flexDirection='row' justifyContent='space-between' width={'100%'}>
           <IconButton icon={HomeIcon} height={48} marginTop={18} marginLeft={20} onClick={() => router.push('/')}/>
           <Navbar />
         </Pane>
-        <Pane width='100%' height='90vh' border='default' display='flex' alignItems='center' flexDirection='column' justifyContent='center'>
-          <form onSubmit={handleBuscarViaje}>
-          {/*Buscar viajes form*/}
-            <Card elevation={1} height={350} width='100%' border="default" padding={30} display='flex' flexDirection='column' alignItems='center'>
-              {/*Title*/}
-                  <Strong size={600} marginTop={10}>Buscar Viajes</Strong>
-                  {/*Combox origen y destino*/}
-                  <Combobox openOnFocus items={origenForm} onChange={selected => setOrigen(selected)} placeholder='Origen' marginTop={20} width='100%' />
-                  <Combobox openOnFocus items={origenForm} onChange={selected => setDestino(selected)} placeholder='Destino' marginTop={10} marginBottom={10} width='100%' />
-                  <DatePicker locale='es' selected={startDate} onChange={(date) => setStartDate(date)} customInput={<TextInput />} isClearable placeholderText="Selecciona una fecha" />
-                  {/*Input hora*/}
-                  {/*<TextInput name='hora' placeholder='Hora' type='text' onChange={handlechangeHora} value={hora} maxLength='15' marginTop={10} pattern='[0-9]{1,4}' title='Solo números' />*/}
-                  {/*Login Button*/}
-                  <Button appearance='primary' display='flex' marginTop={20} type='submit'>Buscar Viajes</Button>
-            </Card>
-          </form>
+        <Pane background='tint1' width='100%' height='90vh' border='default' display='flex' flexDirection='column' justifyContent='space-around'>
+        {/*Panel de pasajes que se quiere comprar*/}
+          <Pane display='flex' flexDirection='row' justifyContent='space-around'>
+          {/*Primer bloque*/}
+              <Pane background='white' marginTop={-60}>
+              {/*<TicketsOrder carrito={carritoTickets}/>*/}
+              {carritoTickets.length > 0 ? <TicketsOrder carrito={carritoTickets} rmvElmt={rmvElmt}/> : <></>}
+              </Pane>
+          {/*Segundo bloque*/}
+              <Pane>
+                <form onSubmit={handleBuscarViaje}>
+                {/*Buscar viajes form*/}
+                  <Card background='white' elevation={1} height={350} width='100%' border="default" padding={30} display='flex' flexDirection='column' alignItems='center'>
+                    {/*Title*/}
+                        <Strong size={600} marginTop={10}>Buscar Viajes</Strong>
+                        {/*Combox origen y destino*/}
+                        <Combobox openOnFocus items={origenForm} onChange={selected => setOrigen(selected)} placeholder='Origen' marginTop={20} width='100%' />
+                        <Combobox openOnFocus items={origenForm} onChange={selected => setDestino(selected)} placeholder='Destino' marginTop={10} marginBottom={10} width='100%' />
+                        <DatePicker locale='es' selected={startDate} onChange={(date) => setStartDate(date)} customInput={<TextInput />} isClearable placeholderText="Selecciona una fecha" />
+                        {/*Input hora*/}
+                        {/*<TextInput name='hora' placeholder='Hora' type='text' onChange={handlechangeHora} value={hora} maxLength='15' marginTop={10} pattern='[0-9]{1,4}' title='Solo números' />*/}
+                        {/*Login Button*/}
+                        <Button appearance='primary' display='flex' marginTop={20} type='submit'>Buscar Viajes</Button>
+                  </Card>
+                </form>
+              </Pane>
+          {/*Tercer bloque*/}
+              <Pane background='white' >
+
+              </Pane>
+          </Pane>
         </Pane>
         </>
       )}

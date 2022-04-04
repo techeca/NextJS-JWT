@@ -92,9 +92,12 @@ database: ''
 
 ## TODO
 
-Middleware \
-Función de compra \
-Mover variables para encriptar token
+Agregar Middleware \
+Agregar Función de compra \
+Agregar Adaptación para celulares \
+Arreglar Formular de lista de Pasajes \
+Arreglar Mover variables para encriptar token
+
 
 ## More
 

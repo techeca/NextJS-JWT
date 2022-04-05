@@ -1,6 +1,14 @@
-import { Button, Pane, Text, TextInput, Card, Strong, TextInputField, toaster, Spinner, SideSheet, Heading, Position, IconButton, CrossIcon, Paragraph, TrashIcon, Pagination, Dialog } from 'evergreen-ui';
+import { Button, Pane, Text, TextInput, Card, Strong, TextInputField, toaster, Spinner, SideSheet, Heading, Position, IconButton, CrossIcon, Paragraph, TrashIcon, Pagination, Dialog, FormField } from 'evergreen-ui';
 import { useState, useEffect } from 'react'
 import LoadingComp from '../components/loading'
+import { getCookies, getCookie, setCookies, removeCookies } from 'cookies-next'
+
+function parseToken(token) {
+  if(!token){return;}
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace('-', '+').replace('_', '/');
+  return JSON.parse(window.atob(base64));
+}
 
 function TicketsOrder(carrito){
   //c.info c.fecha c.nroAsiento
@@ -12,6 +20,8 @@ function TicketsOrder(carrito){
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [isShown, setIsShown] = useState(false);
+  const [userToken, setUserToken] = useState('');
+  const [isLogged, setIsLogged] = useState(false);
 
   function generarId(c){
       contador = contador+1;
@@ -30,6 +40,10 @@ function TicketsOrder(carrito){
 
   const handleLoad = async (e) => {
     setCarritoTry(carrito.carrito);
+    const token = getCookie('token');
+    if(!token){
+      setUserToken(parseToken(token));
+    }
   }
   function removeElement(array, c){
 
@@ -44,8 +58,8 @@ function TicketsOrder(carrito){
     console.log('cantidad total: '+carritoTry.length)
   }
   function comprarPasajes(){
-
-
+    
+    //Cerramos ventana, limpamos carro y lo enviamos limpio a buyTickets
     setIsShown(false);
     const empetyCar = [];
     carrito.rmvElmt(empetyCar)
@@ -65,19 +79,69 @@ function TicketsOrder(carrito){
       </>
     )
   }
+  function ResumenCompraNoLog(){
+    return(
+      <>
+        <Card elevation={0} margin={10} border="default" display='flex' flexDirection='column' justifyContent='flex-start'>
+          {/*Title*/}
+              {/*Input hora*/}
+              {/*<TextInput name='hora' placeholder='Hora' type='text' onChange={handlechangeHora} value={hora} maxLength='15' marginTop={10} pattern='[0-9]{1,4}' title='Solo números' />*/}
+              <FormField label='Datos Personales' margin={20}>
+              <Pane display='flex' flexDirection='column' alignItems='center'>
+              <TextInput margin={10} placeholder='Nombres'></TextInput>
+              <TextInput margin={10} placeholder='Apellidos'></TextInput>
+              <TextInput margin={10} placeholder='Email'></TextInput>
+              <TextInput margin={10} placeholder='Telefono'></TextInput>
+              <TextInput margin={10} placeholder='Dirección'></TextInput>
+              <TextInput margin={10} placeholder='RUT'></TextInput>
+              </Pane>
+              </FormField>
+        </Card>
+      </>
+    )
+  }
+  function ResumenCompra(){
+    const info = parseToken(getCookie('token'));
+
+    return(
+      <>
+        <Card elevation={0} margin={10} border="default" display='flex' flexDirection='column' justifyContent='flex-start'>
+          {/*Title*/}
+              {/*Input hora*/}
+              {console.log(info)}
+              {/*<TextInput name='hora' placeholder='Hora' type='text' onChange={handlechangeHora} value={hora} maxLength='15' marginTop={10} pattern='[0-9]{1,4}' title='Solo números' />*/}
+              <FormField label='Datos Personales' margin={20}>
+              <Pane display='flex' flexDirection='column' alignItems='center'>
+              <Pane><Text margin={10}>Nombre:</Text><Text margin={10}>{info.name}</Text></Pane>
+              <Pane><Text margin={10}>Apellidos:</Text><Text margin={10}>{info.lastName}</Text></Pane>
+              <Pane><Text margin={10}>Email:</Text><Text margin={10}>{info.email}</Text></Pane>
+              <Pane><Text margin={10}>Telefono:</Text><Text margin={10}>{info.phone}</Text></Pane>
+              <Pane><Text margin={10}>Dirección:</Text><Text margin={10}>{info.name}</Text></Pane>
+              <Pane><Text margin={10}>RUT:</Text><Text margin={10}>{info.rut}</Text></Pane>
+              </Pane>
+              </FormField>
+        </Card>
+      </>
+    )
+  }
   function BuyPanel(){
     const totalPasaje = carritoTry.length;
-    const ivaC = 0.19;
 
     return(
       <Pane>
       <Dialog isShown={isShown} title="Resumen" onCloseComplete={() => setIsShown(false)} preventBodyScrolling onConfirm={() => comprarPasajes()} confirmLabel="Comprar">
         <Pane display='flex' flexDirection='column'>
-          <Strong>Datos Personales</Strong>
-          
+        {/*Verificar si hay cockies, dependiendo si ahy o no cambia el componente*/}
+          {userToken === '' ? <ResumenCompra /> : <ResumenCompraNoLog />}
           <Text></Text>
-          <Text>IVA: {ivaC*100}%</Text>
-          <Text>Costo total: ${aplicarIVA(generarTotal(), ivaC)}</Text>
+
+          <Card elevation={0} margin={10} border="default" display='flex' flexDirection='column' alignItems='flex-end'>
+          <FormField label='Costo Total' margin={20}>
+          <Pane display='flex' flexDirection='column' alignItems='flex-end'>
+          <Text>${generarTotal()}</Text>
+          </Pane>
+          </FormField>
+          </Card>
         </Pane>
       </Dialog>
     </Pane>

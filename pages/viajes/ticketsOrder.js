@@ -1,4 +1,4 @@
-import { Button, Pane, Text, TextInput, Card, Strong, TextInputField, toaster, Spinner, SideSheet, Heading, Position, IconButton, CrossIcon, Paragraph, TrashIcon, Pagination } from 'evergreen-ui';
+import { Button, Pane, Text, TextInput, Card, Strong, TextInputField, toaster, Spinner, SideSheet, Heading, Position, IconButton, CrossIcon, Paragraph, TrashIcon, Pagination, Dialog } from 'evergreen-ui';
 import { useState, useEffect } from 'react'
 import LoadingComp from '../components/loading'
 
@@ -6,21 +6,31 @@ function TicketsOrder(carrito){
   //c.info c.fecha c.nroAsiento
   //info = origen destino
   let contador = 0;
-  const [total, setTotal] = useState('');
+  const [total, setTotal] = useState(0);
   let contTotal = carrito.carrito.length;  //total de pasajes
   const [carritoTry, setCarritoTry] = useState([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const [isShown, setIsShown] = useState(false);
 
-  function generarId(){
-      contador = contador+1
+  function generarId(c){
+      contador = contador+1;
       return contador
+  }
+  function generarTotal(){
+    var newtotal = parseInt(total);
+    carrito.carrito.map((pasaje) => newtotal = newtotal + parseInt(pasaje.info.costoViaje));
+    return newtotal
+  }
+  function aplicarIVA(total, iva){
+    var get19 = total * iva;
+    var totalIva = total + get19;
+    return totalIva
   }
 
   const handleLoad = async (e) => {
     setCarritoTry(carrito.carrito);
   }
-
   function removeElement(array, c){
 
     let indexP = carrito.carrito.indexOf(c);
@@ -28,16 +38,17 @@ function TicketsOrder(carrito){
     setCarritoTry(newCarr);
     //const minusElemt = carrito.carrito.filter((pasaje) => pasaje === c)
     carrito.rmvElmt(newCarr);
-    console.log('index a remover: '+indexP);
-  }
 
+  }
   function print(carrito){
     console.log('cantidad total: '+carritoTry.length)
   }
+  function comprarPasajes(){
 
-  function useForceUpdate(){
-      const [value, setValue] = useState(0); // integer state
-      return () => setValue(value => value + 1); // update the state to force render
+
+    setIsShown(false);
+    const empetyCar = [];
+    carrito.rmvElmt(empetyCar)
   }
 
   function NoPasajes(){
@@ -52,6 +63,24 @@ function TicketsOrder(carrito){
               <Text color="muted">No hay pasajes</Text>
         </Card>
       </>
+    )
+  }
+  function BuyPanel(){
+    const totalPasaje = carritoTry.length;
+    const ivaC = 0.19;
+
+    return(
+      <Pane>
+      <Dialog isShown={isShown} title="Resumen" onCloseComplete={() => setIsShown(false)} preventBodyScrolling onConfirm={() => comprarPasajes()} confirmLabel="Comprar">
+        <Pane display='flex' flexDirection='column'>
+          <Strong>Datos Personales</Strong>
+          
+          <Text></Text>
+          <Text>IVA: {ivaC*100}%</Text>
+          <Text>Costo total: ${aplicarIVA(generarTotal(), ivaC)}</Text>
+        </Pane>
+      </Dialog>
+    </Pane>
     )
   }
 
@@ -77,7 +106,7 @@ function TicketsOrder(carrito){
 
               {carrito.carrito.map((c) =>
 
-              <Pane key={generarId()} border='default' background="tint2" padding={10} marginTop={10} width='100%' display='flex' justifyContent='space-around'>
+              <Pane key={generarId(c)} border='default' background="tint2" padding={10} marginTop={10} width='100%' display='flex' justifyContent='space-around'>
 
                 <Pane display='flex' flexDirection='column'>
                   <Strong color="muted">Nº Asiento</Strong>
@@ -113,17 +142,18 @@ function TicketsOrder(carrito){
 
                   <Pane display='flex' flexDirection='row' justifyContent='space-between'>
                     <Pane>
-                    <Strong>Total:</Strong><Text> $100.000</Text>
+                      <Strong>Total:</Strong><Text> ${generarTotal()}</Text>
                     </Pane>
-
-                  <Button appearance='primary' onClick={() => print(carritoTry)} type='submit'>Ir a pagar</Button>
+                  <Button appearance='primary' onClick={() => setIsShown(true)} type='submit'>Ir a pagar</Button>
                   </Pane>
 
               </Pane>
 
         </Card>
       )}
+      {BuyPanel()}
       </>
+
     )
 }
 

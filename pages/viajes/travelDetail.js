@@ -1,4 +1,4 @@
-import { Button, Pane, Text, TextInput, Card, Strong, TextInputField, toaster, Spinner, SideSheet, Heading, Position, IconButton, CrossIcon, Paragraph  } from 'evergreen-ui';
+import { Button, Pane, Text, TextInput, Card, Strong, TextInputField, toaster, Spinner, SideSheet, Heading, Position, IconButton, CrossIcon, Paragraph, Dialog } from 'evergreen-ui';
 import LoadingComp from '../components/loading';
 import Navbar from '../components/navbar';
 import HomeButton from '../components/homeButton';
@@ -67,15 +67,19 @@ function seleccionarAsiento(i){
     setSeatSelected(i);
   }
 }
-function prueba(){
+function agregarPasaje(){
   //console.log(travelData.pruebatest);
   //enviamos el pasajes que quiere el usuario
-  var newN = seatSelected+1;
-  console.log(newN)
-  const codePasaje = `${newN}${dataTravel.origen.slice(0, 3)}${dataTravel.destino.slice(0, 3)}${dataTravel.horaSalida}${fechaSelect}`;
-  setCode(codePasaje);
-  travelData.parentCallBack(dataTravel, fechaSelect, seatSelected+1, codePasaje);
-  //console.log(getCookie('pasajes'))
+  if(seatSelected !== ''){
+    var newN = seatSelected+1;
+    //console.log(newN)
+    const codePasaje = `${newN}${dataTravel.origen.slice(0, 3)}${dataTravel.destino.slice(0, 3)}${dataTravel.horaSalida}${fechaSelect}`;
+    setCode(codePasaje);
+    travelData.parentCallBack(dataTravel, fechaSelect, seatSelected+1, codePasaje);
+    //console.log(getCookie('pasajes'))
+  }else {
+      toaster.danger('Debe seleccionar un asiento')
+  }
 }
 
   useEffect(() => {
@@ -135,8 +139,8 @@ function prueba(){
                 <Pane display='flex' flexDirection='column' alignItems='center'>
                   <Text marginTop={40}>Nº seleccionado</Text>
                   <Heading color='muted' size={900} marginTop={10}>{seatSelected === '' ? 0 : seatSelected+1}</Heading>
-                  <Button appearance='primary' marginTop={330} onClick={() => prueba()}>Agregar</Button>
-                  <Button appearance='primary' iconAfter={ArrowLeftIcon} intent='danger' marginTop={10}>Volver</Button>
+                  <Button appearance='primary' marginTop={330} onClick={() => agregarPasaje()}>Agregar</Button>
+                  <Button appearance='primary' iconAfter={ArrowLeftIcon} onClick={() => console.log(seatSelected)} intent='danger' marginTop={10}>Volver</Button>
                 </Pane>
                </Pane>
          </Card>

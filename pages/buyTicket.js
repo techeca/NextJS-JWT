@@ -103,7 +103,7 @@ function Tickets(){
   };
   const handleCallBack = async (e, f, g, h) =>{
     //validamos que no existan mas de 5 Pasajes //contamos desde 0
-    if(carritoTickets.length > 3){
+    if(carritoTickets.length > 4){
       toaster.danger('Carrito lleno!')
     }else {
       //todavia tenemos espacio

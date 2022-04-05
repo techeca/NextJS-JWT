@@ -22,7 +22,7 @@ function Travels(){
           {
             toaster.danger('Debe seleccionar 1 día mínimo')
           }else {
-            const res = await fetch('api/travels', {
+            const res = await fetch('api/admin', {
               body:JSON.stringify({
                 info: datosViaje,
                 semana: semana

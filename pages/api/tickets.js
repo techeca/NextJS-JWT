@@ -29,7 +29,6 @@ function generateToken(data) {
   });
   return token;
 }
-
 function validateToken(data) {
   const token = jwt.verify(data, '4626c7660cb17cca76b21bc5a52f8de133be0f7d44cc2596f6601812d1010edacf920d0e2a90b75222e4f8e6db9b1710c885d97312f229f97189de2720fce442', (err, token) => {
     if(err) return false;
@@ -78,11 +77,11 @@ const buscarViajes = async (req, res) => {
           if(checkDiaViaje(parsedata, fecha.diaSemana)){
             return res.status(200).json({ message:'Viajes encontrados!!', code:200, data: parsedata});
           }else {
-            return res.status(500).json({ message: 'No se encontrarón pasajes con los valores ingresados', code:500});
+            return res.status(500).json({ message: 'No hay pasajes para ese día, prueba con otro.', code:500});
           }
       }else {
         //No se encuentran viajes
-        return res.status(500).json({ message: 'No encontramos Viajes', code:500});
+        return res.status(500).json({ message: 'No hay pasajes con ese origen/destino', code:500});
       }
     } catch (error) {
       //Cualquier otro error

@@ -18,6 +18,7 @@ export default async function handler(req, res) {
 
 function generateToken(data) {
   var u = {
+    idUser: data.idUsers,
     name: data.name,
     lastName: data.lastName,
     rut: data.rut,
@@ -61,7 +62,7 @@ const userLogin = async (req, res) => {
       }
     });
   }else {
-    console.log('Intentamos logear')
+    //console.log('Intentamos logear')
     try {
       //Obtiene los datos de formulario
       const {email, password} = req.body;
@@ -71,6 +72,7 @@ const userLogin = async (req, res) => {
       let results = await conn.query('SELECT * FROM users WHERE email = ?', [email]);
       const stringdata = JSON.stringify(results);
       const parsedata = JSON.parse(stringdata);
+      console.log(parsedata);
       conn.end();
       //Si hay resultados
       if(parsedata.length>0){

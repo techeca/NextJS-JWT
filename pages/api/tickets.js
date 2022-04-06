@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     case 'GET':
       return await loadTravelsForTickets(req, res);
     case 'POST':
-      return await buscarViajes(req, res);
+      return await nuevoTicket(req, res);
     default:
       return res.status(400).send('Method not allowed');
   }
@@ -59,34 +59,42 @@ function checkDiaViaje(data, diaSerch){
   })
   return checkDia;
 }
+function generarPasajes(carrito, idUser){
+  let psje = {idTravel:'', idUser:'', nroAsiento:0, clase:'', fecha:'', code:''};
+  let psjs = [];
+  carrito.map((pasaje) =>
+  {
+  psje.idTravel = pasaje.info.idtravel;
+  psje.idUser = idUser;
+  psje.nroAsiento = pasaje.nroAsiento;
+  psje.fecha = pasaje.fecha;
+  psje.code = pasaje.code;
+  psjs.push(psje);
+  }
+  //psje.idUser = idUser,
+  //psje.nroAsiento = pasaje.nroAsiento,
+  //psje.fecha = pasaje.fecha,
+  //psje.code = pasaje.code,
+  //psjs.push(psje),
+ )
+  return psjs
+}
 
-const buscarViajes = async (req, res) => {
-    //console.log(authHeader);
-    //console.log('Intentamos buscar viaje')
-    try {
-      //Obtiene los datos de formulario
-      const {origen, destino, fecha} = req.body;
-      //Query para buscar todos los viajes que tienen el mismo origen y destino seleccionado por el usuario
-      let results = await conn.query('SELECT * FROM travels WHERE origen = ? && destino = ?', [origen, destino]);
-      const stringdata = JSON.stringify(results);
-      const parsedata = JSON.parse(stringdata);
-      conn.end();
-      //Si hay resultados
-      if(parsedata.length>0){
-          //Verificamos que hay viajes ese dia de la semana
-          if(checkDiaViaje(parsedata, fecha.diaSemana)){
-            return res.status(200).json({ message:'Viajes encontrados!!', code:200, data: parsedata});
-          }else {
-            return res.status(500).json({ message: 'No hay pasajes para ese día, prueba con otro.', code:500});
-          }
-      }else {
-        //No se encuentran viajes
-        return res.status(500).json({ message: 'No hay pasajes con ese origen/destino', code:500});
-      }
+const nuevoTicket = async (req, res) => {
+  //Para insertar hay que validar que user
+  const { idUser, carrito } = req.body;
+  let listPasaje = generarPasajes(carrito, idUser);
+  console.log(listPasaje);
+  try {
+
+    const result = conn.query('INSERT INTO tickets SET ?', listPasaje);
+    //Faltan validaciones en BD //Si es que ya existe
+    conn.end();
+    //console.log(results);
+      return res.status(200).json({ message: 'Pasaje comprado', code:200});
     } catch (error) {
-      //Cualquier otro error
-        return res.status(500).json({ message: `${error}`, code:500});
-    }
+      return res.status(500).json({ message: ' '+error, code:500});
+  }
 };
 
 const loadTravelsForTickets = async (req, res) => {
@@ -99,6 +107,6 @@ const loadTravelsForTickets = async (req, res) => {
     //console.log(results);
       return res.status(200).json({ message: 'Datos obtenidos', code:200, origen:parsedata});
   } catch (error) {
-      return res.status(500).json({ message: ' '+error, code:500});
+      return res.status(500).json({ message: `error`, code:500});
   }
 };

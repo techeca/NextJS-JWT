@@ -41,7 +41,7 @@ function TicketsOrder(carrito){
   const handleLoad = async (e) => {
     setCarritoTry(carrito.carrito);
     const token = getCookie('token');
-    if(!token){
+    if(token){
       setUserToken(parseToken(token));
     }
   }
@@ -57,12 +57,37 @@ function TicketsOrder(carrito){
   function print(carrito){
     console.log('cantidad total: '+carritoTry.length)
   }
-  function comprarPasajes(){
-    
-    //Cerramos ventana, limpamos carro y lo enviamos limpio a buyTickets
-    setIsShown(false);
-    const empetyCar = [];
-    carrito.rmvElmt(empetyCar)
+
+const comprarPasajes = async (e) => {
+    try {
+          const res = await fetch('api/tickets', {
+            body:JSON.stringify({
+              idUser: userToken.idUser,
+              carrito: carritoTry
+            }),
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            method: 'POST'
+          })
+          //Guarda los datos de origenes obtenidos
+          const result = await res.json();
+          //Se cargan en ComboBox
+          if(result.code === 500){
+            toaster.danger(result.message)
+          }else if (result.code == 200) {
+            //Imprime resultado de origenes, ¿es necesario? //imp: Datos obtenidos
+            //toaster.success(result.message);
+            //loadComboBox(result, origenForm);
+          }
+    } catch (error) {
+      toaster.danger(error.message);
+    } finally {
+      //Cerramos ventana, limpamos carro y lo enviamos limpio a buyTickets
+      setIsShown(false);
+      const empetyCar = [];
+      carrito.rmvElmt(empetyCar)
+    }
   }
 
   function NoPasajes(){
@@ -108,7 +133,6 @@ function TicketsOrder(carrito){
         <Card elevation={0} margin={10} border="default" display='flex' flexDirection='column' justifyContent='flex-start'>
           {/*Title*/}
               {/*Input hora*/}
-              {console.log(info)}
               {/*<TextInput name='hora' placeholder='Hora' type='text' onChange={handlechangeHora} value={hora} maxLength='15' marginTop={10} pattern='[0-9]{1,4}' title='Solo números' />*/}
               <FormField label='Datos Personales' margin={20}>
               <Pane display='flex' flexDirection='column' alignItems='center'>
@@ -132,7 +156,7 @@ function TicketsOrder(carrito){
       <Dialog isShown={isShown} title="Resumen" onCloseComplete={() => setIsShown(false)} preventBodyScrolling onConfirm={() => comprarPasajes()} confirmLabel="Comprar">
         <Pane display='flex' flexDirection='column'>
         {/*Verificar si hay cockies, dependiendo si ahy o no cambia el componente*/}
-          {userToken === '' ? <ResumenCompra /> : <ResumenCompraNoLog />}
+          {isLogged ? <ResumenCompraNoLog /> : <ResumenCompra />}
           <Text></Text>
 
           <Card elevation={0} margin={10} border="default" display='flex' flexDirection='column' alignItems='flex-end'>

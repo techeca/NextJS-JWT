@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     case 'GET':
       return await loadTravelsForTickets(req, res);
     case 'POST':
-      return await createTravel(req, res);
+      return await buscarViajes(req, res);
     default:
       return res.status(400).send('Method not allowed');
   }
@@ -29,14 +29,12 @@ function generateToken(data) {
   });
   return token;
 }
-
 function validateToken(data) {
   const token = jwt.verify(data, '4626c7660cb17cca76b21bc5a52f8de133be0f7d44cc2596f6601812d1010edacf920d0e2a90b75222e4f8e6db9b1710c885d97312f229f97189de2720fce442', (err, token) => {
     if(err) return false;
     return true;
   });
 }
-
 function parseToken(token) {
   if(!token){return;}
   const base64Url = token.split('.')[1];
@@ -44,61 +42,75 @@ function parseToken(token) {
   return JSON.parse(window.atob(base64));
 }
 
-const userLogin = async (req, res) => {
-  const authHeader = req.headers['authorization'];
-  //console.log(authHeader);
-  if(authHeader){
-    //Usuario quiere deslogear
-    console.log('Intentamos deslogear')
-    jwt.sign(authHeader, '', {expiresIn:1},(logout, err) => {
-      if(logout) {
-        console.log('desconectamos')
-        return res.status(200).json({ message:'Desconectado', code:200});
-      }else {
-        console.log('error al desconectar')
-        res.status(500).json({message:'Error', code:500})
-      }
-    });
-  }else {
-    console.log('Intentamos logear')
+const loadTravelsForTickets = async (req, res) => {
+  try {
+    //obtenemos Origenes
+    let results = await conn.query('SELECT DISTINCT origen FROM travels');
+    const stringdata = JSON.stringify(results);
+    const parsedata = JSON.parse(stringdata);
+    conn.end();
+    //console.log(results);
+      return res.status(200).json({ message: 'Datos obtenidos', code:200, origen:parsedata});
+  } catch (error) {
+      return res.status(500).json({ message: `${error}`, code:500});
+  }
+};
+
+function checkDiaViaje(data, diaSerch){
+  var test = [];
+  var checkDia = false;
+  data.map((viaje) => {test.push(viaje['dias'])})
+  //Buscamos si hay pasajes comparando el dia seleccionado del calendario //se convierte a dia de semana
+  //Y se compara con los viajes de BD para ver si hay viajes con ese dia de la semana //lunes, martes, miercoles, etc...
+  test.map((dia) => {
+    if(JSON.parse(dia)[`${diaSerch}`]){
+      //console.log('pasaje encontrado');
+      checkDia = true;
+    }else {
+      //console.log('no hay pasajes');
+      checkDia = false;
+    }
+  })
+  return checkDia;
+}
+
+const buscarViajes = async (req, res) => {
+    //console.log(authHeader);
+    //console.log('Intentamos buscar viaje')
     try {
       //Obtiene los datos de formulario
-      const {email, password} = req.body;
-      //Se encripta la contraseña con bcrypt
-      var hash = await bcrypt.hash(password, 10);
-      //Query para buscar email en BD
-      let results = await conn.query('SELECT * FROM users WHERE email = ?', [email]);
+      const {origen, destino, fecha} = req.body;
+      //Query para buscar todos los viajes que tienen el mismo origen y destino seleccionado por el usuario
+      let results = await conn.query('SELECT * FROM travels WHERE origen = ? && destino = ?', [origen, destino]);
       const stringdata = JSON.stringify(results);
       const parsedata = JSON.parse(stringdata);
       conn.end();
       //Si hay resultados
       if(parsedata.length>0){
-          //Guardamos hash de BD
-          const storedPass = parsedata[0]['hash'];
-          //Validamos que password es igual a hash de BD
-          const match = await bcrypt.compare(password, storedPass);
-          //console.log(storedPass);
-          if(match){
-              //Inicia sesion, se genera token, guarda token y se redirige a panel de usuario?
-              //Enviamos token con los datos del usuario
-              //res.cookie('token', generateToken(parsedata[0]), {maxAge: 300 * 1000});
-              return res.status(200).json({ message:'Ya registrado entonces logeamos', code:200, data: generateToken(parsedata[0])});
-            }else {
-              //Pasword y hash distintos
-              return res.status(500).json({ message:'Contraseña incorrecta', code:500});
-            }
+          //Verificamos que hay viajes ese dia de la semana
+          if(checkDiaViaje(parsedata, fecha.diaSemana)){
+            return res.status(200).json({ message:'Viajes encontrados!!', code:200, data: parsedata});
+          }else {
+            return res.status(500).json({ message: 'No hay pasajes para ese día, prueba con otro.', code:500});
+          }
       }else {
-        //Correo no se encuentra en BD
-        return res.status(500).json({ message: 'Correo no está registrado', code:500});
+        //No se encuentran viajes
+        return res.status(500).json({ message: 'No hay pasajes con ese origen/destino', code:500});
       }
     } catch (error) {
       //Cualquier otro error
-        return res.status(500).json({ message: ' '+error, code:500});
+        return res.status(500).json({ message: `${error}`, code:500});
     }
-  }
 };
 
+//agregar a buscar viajes con auth
 const createTravel = async (req, res) => {
+
+  //Para insertar hay que validar que user
+  const authHeader = req.headers['authorization'];
+  if(authHeader){
+
+  }
   try {
     const { info, semana } = req.body;
     const { origen, destino, costoViaje, limitePasajeros, horaSalida } = info;

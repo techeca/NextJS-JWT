@@ -38,7 +38,7 @@ function Tickets(){
   const handleLoad = async (e) => {
       //Intentamos obtener origenes disponibles
     try {
-          const res = await fetch('api/tickets', {
+          const res = await fetch('api/travels', {
             headers: {
               'Content-Type': 'application/json'
             },
@@ -67,7 +67,7 @@ function Tickets(){
     try {
         if(origen !== destino){
           parseDay(startDate);
-          const res = await fetch('api/tickets', {
+          const res = await fetch('api/travels', {
             body:JSON.stringify({
               origen: origen,
               destino: destino,

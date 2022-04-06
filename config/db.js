@@ -3,7 +3,7 @@ import mysql from 'serverless-mysql';
 //create mysql connection
 const conn = mysql({
   config: {
-    host: '192.168.0.8',
+    host: 'localhost',
     user: 'root',
     password: 'yGuIqsAlxNT',
     port: 3306,

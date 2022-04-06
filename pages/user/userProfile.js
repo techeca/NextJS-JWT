@@ -121,7 +121,7 @@ function user(){
               <Pane margin={20}>
                 <Heading>Mis Viajes</Heading>
                 <Paragraph marginTop={20}>Aqui puede ver todos los pasajes ya comprados..</Paragraph>
-                <Button appearance='primary' marginTop={30} marginLeft={120} onClick={() => router.push('/userProfile')}>Ir a Mis Pasajes</Button>
+                <Button appearance='primary' marginTop={30} marginLeft={120} onClick={() => router.push('/user/userTickets')}>Ir a Mis Pasajes</Button>
               </Pane>
             </Card>
             <Card display='block' backgroundColor="white" elevation={1} height={200} width='48%'>

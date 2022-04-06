@@ -42,7 +42,9 @@ function TicketsOrder(carrito){
     setCarritoTry(carrito.carrito);
     const token = getCookie('token');
     if(token){
+
       setUserToken(parseToken(token));
+      //console.log({userToken});
     }
   }
   function removeElement(array, c){

@@ -33,3 +33,7 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+#config DB
+/config/awsdb.js
+/config/hostinger.js

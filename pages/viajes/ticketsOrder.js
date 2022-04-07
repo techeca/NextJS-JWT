@@ -15,10 +15,9 @@ function TicketsOrder(carrito){
   //info = origen destino
   let contador = 0;
   const [total, setTotal] = useState(0);
-  let contTotal = carrito.carrito.length;  //total de pasajes
   const [carritoTry, setCarritoTry] = useState([]);
   const [page, setPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isShown, setIsShown] = useState(false);
   const [userToken, setUserToken] = useState('');
   const [isLogged, setIsLogged] = useState(false);
@@ -29,7 +28,7 @@ function TicketsOrder(carrito){
   }
   function generarTotal(){
     var newtotal = parseInt(total);
-    carrito.carrito.map((pasaje) => newtotal = newtotal + parseInt(pasaje.info.costoViaje));
+    //carrito.carrito.map((pasaje) => newtotal = newtotal + parseInt(pasaje.info.costoViaje));
     return newtotal
   }
   function aplicarIVA(total, iva){
@@ -37,34 +36,37 @@ function TicketsOrder(carrito){
     var totalIva = total + get19;
     return totalIva
   }
-
   const handleLoad = async (e) => {
-    setCarritoTry(carrito.carrito);
-    const token = getCookie('token');
-    if(token){
+    try {
 
-      setUserToken(parseToken(token));
-      //console.log({userToken});
+            if(userTO !== 'undefined'){
+              setUserToken(parseToken(token));
+              //console.log({userToken});
+            }
+          }
+    catch (error) {
+      toaster.danger(error.message);
+    } finally {
+      setIsLoading(false);
     }
   }
-  function removeElement(array, c){
 
+  function removeElement(array, c){
     let indexP = carrito.carrito.indexOf(c);
     const newCarr = carritoTry.filter((pasaje) =>  pasaje.code !== c.code);
     setCarritoTry(newCarr);
     //const minusElemt = carrito.carrito.filter((pasaje) => pasaje === c)
     carrito.rmvElmt(newCarr);
-
   }
   function print(carrito){
-    console.log('cantidad total: '+carritoTry.length)
+    //console.log('cantidad total: '+carritoTry.length)
   }
 
-const comprarPasajes = async (e) => {
+  const comprarPasajes = async (e) => {
     try {
           const res = await fetch('api/tickets', {
             body:JSON.stringify({
-              idUser: userToken.idUser,
+              idUser: userToken,
               carrito: carritoTry
             }),
             headers: {
@@ -151,14 +153,16 @@ const comprarPasajes = async (e) => {
     )
   }
   function BuyPanel(){
-    const totalPasaje = carritoTry.length;
+    //const totalPasaje = carritoTry.length;
+    //const token = getCookie('token');
+    //if(token !== 'undefined'){setUserToken(parseToken(token))}
 
     return(
       <Pane>
       <Dialog isShown={isShown} title="Resumen" onCloseComplete={() => setIsShown(false)} preventBodyScrolling onConfirm={() => comprarPasajes()} confirmLabel="Comprar">
         <Pane display='flex' flexDirection='column'>
         {/*Verificar si hay cockies, dependiendo si ahy o no cambia el componente*/}
-          {isLogged ? <ResumenCompraNoLog /> : <ResumenCompra />}
+          {userToken === 0 ? <ResumenCompraNoLog /> : <ResumenCompra />}
           <Text></Text>
 
           <Card elevation={0} margin={10} border="default" display='flex' flexDirection='column' alignItems='flex-end'>
@@ -175,12 +179,14 @@ const comprarPasajes = async (e) => {
   }
 
   useEffect(() => {
-    const qunt = carrito.carrito.length;
-    if(qunt > 0){
-      handleLoad();
-      setIsLoading(false);
-    }
-  }, []);
+    const token = getCookie('token');
+    if(!token){setUserToken(0)}else {
+        console.log('chao');
+        setUserToken(parseToken(token).idUser);
+      };
+    //;
+    setCarritoTry(carrito.carrito);
+  },[carrito.carrito]);
 
     return(
       <>
@@ -194,7 +200,7 @@ const comprarPasajes = async (e) => {
               {/*Login Button*/}
               {/*<Text color="muted">No hay pasajes</Text>*/}
 
-              {carrito.carrito.map((c) =>
+              {carritoTry.map((c) =>
 
               <Pane key={generarId(c)} border='default' background="tint2" padding={10} marginTop={10} width='100%' display='flex' justifyContent='space-around'>
 
@@ -228,7 +234,7 @@ const comprarPasajes = async (e) => {
 
               </Pane>
               )}
-              <Pane display='flex' flexDirection='column' justifyContent='space-between' width='90%' height={'100%'} justifyContent='flex-end' >
+              <Pane display='flex' flexDirection='column' width='90%' height={'100%'} justifyContent='flex-end' >
 
                   <Pane display='flex' flexDirection='row' justifyContent='space-between'>
                     <Pane>

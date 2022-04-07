@@ -50,7 +50,7 @@ function Login(){
     }else {
       router.push('/user')
     }
-  }, []);
+  }, [router]);
 
   return (
     <>

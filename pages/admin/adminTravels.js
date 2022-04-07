@@ -62,7 +62,7 @@ function Travels(){
   useEffect(() => {
     const token = getCookie('token');
     if(!token) {router.push('/login')}
-  }, []);
+  });
 
   return (
     //Login container

@@ -51,15 +51,13 @@ function UserTickets(){
           if(result.code === 500){
             toaster.error(result.message)
             //router.push('/login');
-          }else if (result.code == 200) {
+          }else if (result.code === 200) {
             if(result.pasajes.length > 0){
               setPasajes(result);
               setPasajes2(result);
               setTotalPage(result.pasajes.length/10+1);
             }
-
-
-            toaster.success(result.message);
+            //toaster.success(result.message);
             //router.push('/login');
           }
            //router.push("/login");
@@ -72,7 +70,7 @@ function UserTickets(){
 
   useEffect(() => {
     handleLoad();
-  }, []);
+  });
 
   return(
     <>
@@ -96,6 +94,7 @@ function UserTickets(){
           <Table.Body height='auto' width='100%'>
             {isLoading ? <LoadingComp /> : ( paginate(pasajes2.pasajes, 10, page).map((p) =>
               <Table.Row key={p.idTicket}>
+              <Table.TextCell>{p.nroAsiento}</Table.TextCell>
                 <Table.TextCell>{p.fecha}</Table.TextCell>
                 <Table.TextCell>{p.origen}</Table.TextCell>
                 <Table.TextCell>{p.destino}</Table.TextCell>

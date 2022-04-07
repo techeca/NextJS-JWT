@@ -14,7 +14,7 @@ function parseToken(token) {
   return JSON.parse(window.atob(base64));
 }
 
-function user(){
+function User(){
   const router = useRouter();
   const [isLoading, setLoading] = useState(true);
   const [userProfile, setUserProfile] = useState({name:'', lastName:'', rut:'', email:'', phone:'', password:'', repassword:''});
@@ -197,7 +197,7 @@ function user(){
     }else {
       handleLoad();
     }
-  }, []);
+  });
 
   return (
     <Pane>
@@ -214,4 +214,4 @@ function user(){
   );
 }
 
-export default user
+export default User

@@ -8,7 +8,6 @@ import Image from 'next/image'
 import asientoBlank from '../../public/iconseat.png'
 import asientoSelec from '../../public/iconseatSelected.png'
 import DatePicker, {registerLocale} from 'react-datepicker'
-import {useAppContext} from '../state'
 import { getCookies, getCookie, setCookies, removeCookies } from 'cookies-next'
 
 function setHourPoint(hour){
@@ -47,14 +46,14 @@ function seatPack(i){
     return (
       <>
         <Text>{i<9 ? `0${i+1}` : i+1}</Text>
-        <Image key={i.x} src={asientoSelec} width={48} height={48} fill={'red'} />
+        <Image alt='Seat' key={i.x} src={asientoSelec} width={48} height={48} fill={'red'} />
       </>
     )
   }else {
     return(
       <>
         <Text>{i<9 ? `0${i+1}` : i+1}</Text>
-        <Image key={i.x} src={asientoBlank} width={48} height={48} fill={'red'} />
+        <Image alt='Sea Blanck' key={i.x} src={asientoBlank} width={48} height={48} fill={'red'} />
       </>
     )
   }
@@ -84,7 +83,7 @@ function agregarPasaje(){
 
   useEffect(() => {
       handleLoad();
-  }, []);
+  });
 
   return(
     <>

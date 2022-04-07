@@ -26,14 +26,14 @@ function generateToken(data) {
     email: data.email,
     password: data.password
   }
-  const token = jwt.sign(u, '4626c7660cb17cca76b21bc5a52f8de133be0f7d44cc2596f6601812d1010edacf920d0e2a90b75222e4f8e6db9b1710c885d97312f229f97189de2720fce442', {
+  const token = jwt.sign(u, process.env.API_KEY, {
     expiresIn: 60 * 60 * 24,  //Cuanto tiempo es?? 3min? nop, mucho más
   });
   return token;
 }
 
 function validateToken(data) {
-  const token = jwt.verify(data, '4626c7660cb17cca76b21bc5a52f8de133be0f7d44cc2596f6601812d1010edacf920d0e2a90b75222e4f8e6db9b1710c885d97312f229f97189de2720fce442', (err, token) => {
+  const token = jwt.verify(data, process.env.API_KEY, (err, token) => {
     if(err) return false;
     return true;
   });

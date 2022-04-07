@@ -213,7 +213,7 @@ function Tickets(){
 
   useEffect(() => {
       handleLoad();
-  }, []);
+  });
 
     return(
       <>

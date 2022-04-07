@@ -93,10 +93,11 @@ database: ''
 ## TODO
 
 Agregar Middleware \
-Agregar Función de compra \
 Agregar Adaptación para celulares \
-Arreglar Formular de lista de Pasajes \
-Arreglar Mover variables para encriptar token
+Mover variables para encriptar/verificar token \
+Validaciones en general \
+Crear branch mySQL2 \
+Crear branch postgreSQL
 
 
 ## More

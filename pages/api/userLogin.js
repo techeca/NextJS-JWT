@@ -84,6 +84,7 @@ const userLogin = async (req, res) => {
           if(match){
               //Enviamos token con los datos del usuario
               //res.cookie('token', generateToken(parsedata[0]), {maxAge: 300 * 1000});
+
               return res.status(200).json({ message:'Validando datos...', code:200, data: generateToken(parsedata[0])});
             }else {
               //Pasword y hash distintos

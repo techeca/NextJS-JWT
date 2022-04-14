@@ -6,6 +6,7 @@ import { UserIcon, LogOutIcon, HomeIcon, AirplaneIcon } from 'evergreen-ui'
 import { getCookies, getCookie, setCookies, removeCookies } from 'cookies-next'
 import {isMobile} from 'react-device-detect'
 import LoadingComp from '../components/loading'
+import { userService } from '../../services'
 
 function parseToken(token) {
   if(!token){return;}
@@ -16,50 +17,19 @@ function parseToken(token) {
 
 function User(){
   const router = useRouter();
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(false);
   const [userProfile, setUserProfile] = useState({name:'', lastName:'', rut:'', email:'', phone:'', password:'', repassword:''});
   const [isShown, setIsShown] = useState(false);
+  const [users, setUsers] = useState(null);
 
-  const handleLogout = async (e) => {
-      //e.preventDefault();
-      const token = getCookie('token');
-    try {
-          const res = await fetch('api/userLogin', {
-            headers: {
-              'Authorization': 'Bearer ' + token
-            },
-            method: 'POST'
-          })
-
-          const result = await res.json();
-
-          if(result.code === 500){
-            toaster.error(result.message)
-            //router.push('/login');
-          }else if (result.code == 200) {
-            toaster.success(result.message);
-            removeCookies('token');
-            router.push('/login');
-          }
-           //router.push("/login");
-    } catch (error) {
-      toaster.error(error.message);
-    }
-  };
+  function logout(){
+    userService.logout();
+  }
   const handleLoad = async (e) => {
       //e.preventDefault();
-      const token = getCookie('token');
-      if(!token) {router.push('/login')}
     try {
-          const res = await fetch('api/userLogin', {
-            headers: {
-              'Authorization': 'Bearer ' + token
-            },
-            method: 'GET'
-          })
           //Cargan los datos del usuario
-          const result = await res.json()
-          const userInfo = parseToken(result.data);
+          const userInfo = JSON.parse();
           userProfile.name = userInfo.name;
           userProfile.lastName = userInfo.lastName;
           userProfile.rut = userInfo.rut;
@@ -71,7 +41,7 @@ function User(){
 
           if(result.code === 500){
             toaster.error(result.message)
-            router.push('/login');
+            //router.push('/login');
           }else if (result.code == 200) {
             toaster.success(result.message);
             //router.push('/login');
@@ -145,7 +115,7 @@ function User(){
         <Pane flex="1" background="tint1" padding={15} paddingTop={150} paddingLeft={400}>
           <Card backgroundColor="white" elevation={1} height={60} width={160} display="flex" alignItems="center" justifyContent="space-around">
             <Heading>Desconectar</Heading>
-            <IconButton appearance='primary' intent='danger' height={48} icon={LogOutIcon} onClick={handleLogout} />
+            <IconButton appearance='primary' intent='danger' height={48} icon={LogOutIcon} onClick={logout} />
           </Card>
         </Pane>
       </SideSheet>
@@ -157,14 +127,14 @@ function User(){
         <IconButton icon={HomeIcon} height={54} margin={10} onClick={() => router.push('/')} />
         <IconButton icon={UserIcon} height={54} margin={10} onClick={() => setIsShown(true)} />
         <IconButton icon={AirplaneIcon} height={54} margin={10} onClick={() => router.push('/buyTicket')} />
-        <IconButton icon={LogOutIcon} appearance='primary' intent='danger' height={54} margin={10} onClick={handleLogout} />
+        <IconButton icon={LogOutIcon} appearance='primary' intent='danger' height={54} margin={10} onClick={logout} />
       </Pane>
     )
   }
   function formProfile(){
     return(
       <Pane>
-        <form onSubmit={handleLogout}>
+        <form onSubmit={logout}>
         {/*Login form*/}
           <Card elevation={1} border="default" display='flex' flexDirection='column' alignItems='center' padding={20}>
             {/*Title*/}
@@ -191,13 +161,10 @@ function User(){
   }
 
   useEffect(() => {
-    const token = getCookie('token');
-    if(!token) {
-      router.push('/login')
-    }else {
-      handleLoad();
-    }
-  });
+    const usrtmp = localStorage.getItem('user');
+    userService.getAll(usrtmp).then(x => setUsers(x));
+    console.log(users);
+  }, []);
 
   return (
     <Pane>

@@ -5,6 +5,7 @@ import { getCookies, getCookie, setCookies, removeCookies } from 'cookies-next'
 import { UserIcon, LogOutIcon, HomeIcon, AirplaneIcon } from 'evergreen-ui'
 import LoadingComp from './components/loading'
 import HomeButton from './components/homeButton';
+import {userService} from '../services';
 
 function Login(){
   const router = useRouter();
@@ -12,45 +13,23 @@ function Login(){
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-          const res = await fetch('api/userLogin', {
-            body:JSON.stringify({
-              email: event.target.email.value,
-              password: event.target.password.value
-            }),
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            method: 'POST'
-          })
-          const result = await res.json();
-
-          if(result.code === 500){
-            toaster.danger(result.message)
-          }else if (result.code == 200) {
-            //Generamos cookie con el token de respuesta
-            setCookies('token', result.data);
-            console.log(result.data)
-            toaster.success(result.message);
-            //Re-dirigimos a panel de usuario
-            router.push('/user');
-          }
-    } catch (error) {
-      toaster.danger(error.message);
-    } finally{
-      setIsLoading(false);
-    }
-  };
+      return userService.login(event.target.email.value, event.target.password.value)
+        .then(() => {
+            const returnUrl = router.query.returnUrl || '/';
+            router.push(returnUrl);
+        })
+        .catch(error => {
+          toaster.danger(error);
+        });
+  }
 
   useEffect(() => {
-    const token = getCookie('token');
-    if(!token) {
-      //router.push('/login')
+    if(userService.userValue){
+      router.push('/');
+    }else{
       setIsLoading(false);
-    }else {
-      router.push('/user')
     }
-  }, [router]);
+  }, []);
 
   return (
     <>

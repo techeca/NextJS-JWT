@@ -35,5 +35,4 @@ yarn-error.log*
 .vercel
 
 #config DB
-/config/awsdb.js
-/config/hostinger.js
+/config

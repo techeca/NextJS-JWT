@@ -20,7 +20,6 @@ function User(){
   const [isLoading, setLoading] = useState(false);
   const [userProfile, setUserProfile] = useState({name:'', lastName:'', rut:'', email:'', phone:'', password:'', repassword:''});
   const [isShown, setIsShown] = useState(false);
-  const [users, setUsers] = useState(null);
 
   function logout(){
     userService.logout();
@@ -168,7 +167,6 @@ function User(){
 
   useEffect(() => {
     const usrtmp = localStorage.getItem('user');
-    setUsers(usrtmp);
     setUserData(usrtmp);
     //userService.getAll(usrtmp).then(x => setUsers(x));
     //console.log(users);

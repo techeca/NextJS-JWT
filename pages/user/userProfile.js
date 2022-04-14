@@ -160,10 +160,18 @@ function User(){
     )
   }
 
+  function setUserData(data){
+    const u = JSON.parse(data)
+    console.log(u)
+    userProfile.name = u.name
+  }
+
   useEffect(() => {
     const usrtmp = localStorage.getItem('user');
-    userService.getAll(usrtmp).then(x => setUsers(x));
-    console.log(users);
+    setUsers(usrtmp);
+    setUserData(usrtmp);
+    //userService.getAll(usrtmp).then(x => setUsers(x));
+    //console.log(users);
   }, []);
 
   return (
@@ -180,5 +188,6 @@ function User(){
     </Pane>
   );
 }
+
 
 export default User

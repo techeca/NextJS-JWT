@@ -10,7 +10,7 @@ export const fetchWrapper = {
   delete: _delete
 };
 
-function get(url, data){
+function get(url){
   //const tmp = parseToken(data);
   const requestOptions = {
     method: 'GET',

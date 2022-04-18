@@ -7,6 +7,7 @@ import { getCookies, getCookie, setCookies, removeCookies } from 'cookies-next'
 import {isMobile} from 'react-device-detect'
 import LoadingComp from '../components/loading'
 import Navbar from '../components/navbar'
+import { userService } from '../../services'
 
 function parseToken(token) {
   if(!token){return;}
@@ -31,46 +32,31 @@ function UserTickets(){
   const handlePageChange = async (e) => {
     setPage(e);
   };
-  const handleLoad = async (e) => {
-      //e.preventDefault();
-      var token = getCookie('token');
-      if(!token) {router.push('/login')}
-      token = parseToken(token);
-      const idUser = token.idUser;
-    try {
-          const res = await fetch('../api/tickets', {
-            headers: {
-              'Authorization': 'Bearer ' + idUser
-            },
-            method: 'GET'
-          })
-          //Cargan los datos del usuario
-          const result = await res.json();
-          //console.log(prueba);
-          //console.log(parseToken(result.data));
-          if(result.code === 500){
-            toaster.error(result.message)
-            //router.push('/login');
-          }else if (result.code === 200) {
-            if(result.pasajes.length > 0){
-              setPasajes(result);
-              setPasajes2(result);
-              setTotalPage(result.pasajes.length/10+1);
-            }
-            //toaster.success(result.message);
-            //router.push('/login');
-          }
-           //router.push("/login");
-    } catch (error) {
-      toast.error(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+   const handleLoad = async (e) => {
+       //e.preventDefault();
+     try {
+           //se guardan los pasajes obtenidos
+           console.log(e)
+           //console.log(prueba);
+           //console.log(parseToken(result.data));
+              if(e.pasajes.length > 0){
+                setPasajes(e);
+                setPasajes2(e);
+                setTotalPage(e.pasajes.length/10+1);
+              }
+     } catch (error) {
+       toast.error(error.message);
+     } finally {
+       setIsLoading(false);
+     }
+   };
+
 
   useEffect(() => {
-    handleLoad();
-  });
+    //handleLoad();
+    userService.getTickets().then(x => handleLoad(x));
+    //console.log(pasajes);
+  }, []);
 
   return(
     <>
@@ -92,7 +78,7 @@ function UserTickets(){
             <Table.TextHeaderCell >Estado</Table.TextHeaderCell>
           </Table.Head>
           <Table.Body height='auto' width='100%'>
-            {isLoading ? <LoadingComp /> : ( paginate(pasajes2.pasajes, 10, page).map((p) =>
+            {isLoading ? <LoadingComp /> : ( pasajes.pasajes.map((p) =>
               <Table.Row key={p.idTicket}>
               <Table.TextCell>{p.nroAsiento}</Table.TextCell>
                 <Table.TextCell>{p.fecha}</Table.TextCell>

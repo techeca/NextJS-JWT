@@ -2,10 +2,10 @@ import {useState, useEffect} from 'react'
 import { useRouter } from 'next/router'
 import { Button, Pane, Text, TextInput, Card, Strong, toaster, Spinner, IconButton } from 'evergreen-ui'
 import { getCookies, getCookie, setCookies, removeCookies } from 'cookies-next'
-import { UserIcon, LogOutIcon, HomeIcon, AirplaneIcon } from 'evergreen-ui'
+import { UserIcon, LogOutIcon, HomeIcon, AirplaneIcon, LogInIcon, NewPersonIcon } from 'evergreen-ui'
 import LoadingComp from './components/loading'
-import HomeButton from './components/homeButton';
-import {userService} from '../services';
+import HomeButton from './components/homeButton'
+import {userService} from '../services'
 
 function Login(){
   const router = useRouter();
@@ -37,6 +37,11 @@ function Login(){
       <>
       <Pane display='flex' flexDirection='row' justifyContent='space-between' width={'100%'}>
         <HomeButton />
+        <Pane display='flex' padding={15} justifyContent='flex-end' >
+          <Card backgroundColor="white" elevation={0} height={50} width={160} display="flex" alignItems="center" justifyContent="space-around">
+            <Button appearance='primary' intent='success' height={36} onClick={() => router.push('/register')} iconAfter={NewPersonIcon}>Registro</Button>
+          </Card>
+        </Pane>
       </Pane>
       <Pane width='100%' height='90vh' border='default' display='flex' alignItems='center' flexDirection='column' justifyContent='center'>
         {/*Login form*/}

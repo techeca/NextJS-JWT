@@ -12,7 +12,8 @@ export const userService = {
   get userValue () { return userSubject.value},
   login,
   logout,
-  getAll
+  getTickets,
+  register
 };
 
 function login(username, password) {
@@ -30,7 +31,17 @@ function logout(){
   Router.push('/login');
 }
 
-function getAll(data){
+//remover??
+function getTickets(){
   //const tmp = parseToken(data);
-  return fetchWrapper.get(baseUrl, data);
+  return fetchWrapper.get(`${baseUrl}/tickets`);
+}
+
+function register(name, lastName, rut, email, phone, password){
+  return fetchWrapper.post(`${baseUrl}/register`, {name, lastName, rut, email, phone, password})
+    .then(user => {
+      userSubject.next(user);
+      localStorage.setItem('user', JSON.stringify(user));
+      return user;
+    });
 }

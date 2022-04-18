@@ -23,8 +23,8 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   function authCheck(url) {
-    //Paths permitidos
-     const publicPaths = ['/login', '/'];
+    //Paths permitidos //pages
+     const publicPaths = ['/', '/login', '/register'];
      const path = url.split('?')[0];
      if(!userService.userValue && !publicPaths.includes(path)){
        setAuthorized(false);

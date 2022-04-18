@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import { useRouter } from 'next/router'
 import { Button, Pane, Text, TextInput, Card, Strong, toaster, LogInIcon } from 'evergreen-ui'
-import {userService} from '../services'
+import { userService } from '@services/index'
 import HomeButton from './components/homeButton'
 import LoadingComp from './components/loading'
 
@@ -14,10 +14,10 @@ function Register(){
       return userService.register(event.target.name.value, event.target.lastName.value, event.target.rut.value, event.target.email.value, event.target.phone.value, event.target.password.value)
         .then(() => {
             const returnUrl = router.query.returnUrl || '/';
-            router.push(returnUrl);
+            router.push(returnUrl)
         })
         .catch(error => {
-          toaster.danger(error+' ');
+          toaster.danger(error+' ')
         });
   };
 

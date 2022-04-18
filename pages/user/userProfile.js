@@ -7,7 +7,7 @@ import {isMobile} from 'react-device-detect'
 import LoadingComp from '../components/loading'
 import UserForm from '../components/userForm'
 import UserPanel from '../components/userPanel'
-import { userService } from '../../services'
+import { userService } from '@services/index'
 
 function User(){
   const router = useRouter()
@@ -15,12 +15,15 @@ function User(){
   const [userProfile, setUserProfile] = useState({name:'', lastName:'', rut:'', email:'', phone:'', password:'', repassword:''})
   const [isShown, setIsShown] = useState(false)
 
+  //Funcion para desconectar, elimina los datos del servicio de usuario
   function logout(){
     userService.logout();
   }
+  //Controal el panel de usuario
   const handleUserPanel = async (e) => {
     setIsShown(!isShown)
   }
+  //Controla formulario de datos de usuario
   const handlechange = async (e) => {
     setUserProfile({...userProfile, [e.target.name]: e.target.value})
   }
@@ -38,7 +41,7 @@ function User(){
 
   async function setUserData(data){
     const u = JSON.parse(data)
-    //console.log(u)
+    //Inserta los datos del usuario en el useState UserProfile (para formulario)
     userProfile.name = u.name
     userProfile.lastName = u.lastName
     userProfile.rut = u.rut
@@ -47,6 +50,7 @@ function User(){
   }
 
   useEffect(() => {
+    //Obtiene los datos guardados al iniciar cuenta
     const usrtmp = localStorage.getItem('user')
     setUserData(usrtmp).then(setLoading(false))
     //userService.getAll(usrtmp).then(x => setUsers(x));

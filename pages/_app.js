@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }) {
 
   function authCheck(url) {
     //Paths permitidos //pages
-     const publicPaths = ['/', '/login', '/register'];
+     const publicPaths = ['/', '/login', '/register', '/buyTicket'];
      const path = url.split('?')[0];
      if(!userService.userValue && !publicPaths.includes(path)){
        setAuthorized(false);

@@ -12,8 +12,6 @@ function handler(req, res) {
       return res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 
-
-
   function getUserInfo(){
     const tmp = userService.userValue;
 
@@ -22,7 +20,6 @@ function handler(req, res) {
     const token = authHeader && authHeader.split(' ')[1];
     //const prstkn = parseToken(token);
     //console.log(req.cookies);
-
     return res.status(200).json(tmp);
   }
 

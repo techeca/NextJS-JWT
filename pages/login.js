@@ -1,35 +1,34 @@
 import {useState, useEffect} from 'react'
 import { useRouter } from 'next/router'
 import { Button, Pane, Text, TextInput, Card, Strong, toaster, Spinner, IconButton } from 'evergreen-ui'
-import { getCookies, getCookie, setCookies, removeCookies } from 'cookies-next'
 import { UserIcon, LogOutIcon, HomeIcon, AirplaneIcon, LogInIcon, NewPersonIcon } from 'evergreen-ui'
 import LoadingComp from './components/loading'
 import HomeButton from './components/homeButton'
 import {userService} from '../services'
 
 function Login(){
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter()
+  const [isLoading, setIsLoading] = useState(true)
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
       return userService.login(event.target.email.value, event.target.password.value)
         .then(() => {
             const returnUrl = router.query.returnUrl || '/';
-            router.push(returnUrl);
+            router.push(returnUrl)
         })
         .catch(error => {
           toaster.danger(error);
-        });
+        })
   }
 
   useEffect(() => {
     if(userService.userValue){
-      router.push('/');
+      router.push('/')
     }else{
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  }, []);
+  }, [])
 
   return (
     <>
@@ -61,7 +60,7 @@ function Login(){
       </>
     )}
     </>
-  );
+  )
 }
 
 export default Login

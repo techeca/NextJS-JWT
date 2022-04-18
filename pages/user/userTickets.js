@@ -1,61 +1,54 @@
-import {useState, useEffect} from 'react';
-import toast, { Toaster } from 'react-hot-toast';
-import { useRouter } from 'next/router';
-import { Button, Pane, Text, TextInput, Card, Strong, TextInputField, toaster, Spinner, SideSheet, Heading, Position, IconButton, CrossIcon, Paragraph, Table, Badge, Pagination  } from 'evergreen-ui';
-import { UserIcon, LogOutIcon, HomeIcon, AirplaneIcon } from 'evergreen-ui'
-import { getCookies, getCookie, setCookies, removeCookies } from 'cookies-next'
-import {isMobile} from 'react-device-detect'
+import {useState, useEffect} from 'react'
+import toast, { Toaster } from 'react-hot-toast'
+import { useRouter } from 'next/router'
+import { Pane, Card, Strong, toaster, Heading, IconButton, CrossIcon, Table, Badge, Pagination  } from 'evergreen-ui'
+import { UserIcon, LogOutIcon, HomeIcon } from 'evergreen-ui'
+//import {isMobile} from 'react-device-detect'
 import LoadingComp from '../components/loading'
 import Navbar from '../components/navbar'
-import { userService } from '../../services'
+import { userService } from '@services/index'
 
-function parseToken(token) {
-  if(!token){return;}
-  const base64Url = token.split('.')[1];
-  const base64 = base64Url.replace('-', '+').replace('_', '/');
-  return JSON.parse(window.atob(base64));
-}
+// TODO: Por el momento se muestran 10 objetos por pagina, se puede usar una useState
+// para poder modificar este numero y entregarlo dinamicamente a paginate() y setTotalPage(array, X, page) donde X sería el userState
 
 function UserTickets(){
   const router = useRouter();
-  const [pasajes, setPasajes] = useState('');
-  const [pasajes2, setPasajes2] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
-  const [page, setPage] = useState(1);
-  const [sizexPage, setSizexPage] = useState(10);
-  const [totalPage, setTotalPage] = useState(0);
+  const [pasajes, setPasajes] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
+  const [page, setPage] = useState(1)
+  const [totalPage, setTotalPage] = useState(0)
 
-  function paginate(array, page_size, page_number) {
+  //Paginación
+  function paginate(array, pageSize, pageNumber) {
     // human-readable page numbers usually start with 1, so we reduce 1 in the first argument
-    return array.slice((page_number - 1) * page_size, page_number * page_size);
+    return array.slice((pageNumber - 1) * pageSize, pageNumber * pageSize)
   }
+  //Cambio de paginas
   const handlePageChange = async (e) => {
     setPage(e);
-  };
+  }
    const handleLoad = async (e) => {
-       //e.preventDefault();
-     try {
-           //se guardan los pasajes obtenidos
-           console.log(e)
-           //console.log(prueba);
-           //console.log(parseToken(result.data));
-              if(e.pasajes.length > 0){
-                setPasajes(e);
-                setPasajes2(e);
-                setTotalPage(e.pasajes.length/10+1);
-              }
-     } catch (error) {
-       toast.error(error.message);
-     } finally {
-       setIsLoading(false);
-     }
+       if(e.pasajes.length > 0){
+         try {
+               //Se guardan los pasajes obtenidos
+               setPasajes(e);
+               //Se muestran los datos
+               setIsLoading(false)
+               //Total de objetos divido por 10, que es la misma cantidad que se entrega al paginar
+               setTotalPage(e.pasajes.length/10);
+         } catch (e) {
+           //console.log(e.error);
+           toaster.danger(e.error)
+         }
+       }else {
+         toaster.danger(e.error)
+       }
    };
 
 
   useEffect(() => {
     //handleLoad();
-    userService.getTickets().then(x => handleLoad(x));
-    //console.log(pasajes);
+    userService.getTickets().then(x => handleLoad(x)).catch((error) => toaster.danger(error))
   }, []);
 
   return(
@@ -78,7 +71,7 @@ function UserTickets(){
             <Table.TextHeaderCell >Estado</Table.TextHeaderCell>
           </Table.Head>
           <Table.Body height='auto' width='100%'>
-            {isLoading ? <LoadingComp /> : ( pasajes.pasajes.map((p) =>
+            {isLoading ? <LoadingComp /> : ( paginate(pasajes.pasajes,10,page).map((p) =>
               <Table.Row key={p.idTicket}>
               <Table.TextCell>{p.nroAsiento}</Table.TextCell>
                 <Table.TextCell>{p.fecha}</Table.TextCell>

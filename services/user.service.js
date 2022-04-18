@@ -31,7 +31,6 @@ function logout(){
   Router.push('/login');
 }
 
-//remover??
 function getTickets(){
   //const tmp = parseToken(data);
   return fetchWrapper.get(`${baseUrl}/tickets`);

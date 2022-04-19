@@ -19,7 +19,7 @@ function User(){
   function logout(){
     userService.logout();
   }
-  //Controal el panel de usuario
+  //Controla el panel de usuario
   const handleUserPanel = async (e) => {
     setIsShown(!isShown)
   }
@@ -33,7 +33,7 @@ function User(){
       <Pane>
         <IconButton icon={HomeIcon} height={54} margin={10} onClick={() => router.push('/')} />
         <IconButton icon={UserIcon} height={54} margin={10} onClick={() => handleUserPanel()} />
-        <IconButton icon={AirplaneIcon} height={54} margin={10} onClick={() => router.push('/buyTicket')} />
+        <IconButton icon={AirplaneIcon} height={54} margin={10} onClick={() => router.push('/travels/buyTicket')} />
         <IconButton icon={LogOutIcon} appearance='primary' intent='danger' height={54} margin={10} onClick={logout} />
       </Pane>
     )

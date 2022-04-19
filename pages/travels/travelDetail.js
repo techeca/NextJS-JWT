@@ -5,8 +5,6 @@ import HomeButton from '../components/homeButton';
 import { UserIcon, LogOutIcon, HomeIcon, AirplaneIcon, ArrowRightIcon, ArrowLeftIcon } from 'evergreen-ui';
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import asientoBlank from '../../public/iconseat.png'
-import asientoSelec from '../../public/iconseatSelected.png'
 import DatePicker, {registerLocale} from 'react-datepicker'
 import { getCookies, getCookie, setCookies, removeCookies } from 'cookies-next'
 
@@ -46,20 +44,20 @@ function seatPack(i){
     return (
       <>
         <Text>{i<9 ? `0${i+1}` : i+1}</Text>
-        <Image alt='Seat' key={i.x} src={asientoSelec} width={48} height={48} fill={'red'} />
+        <Image alt='Seat' key={i.x} src='/iconseatSelected.png' width={48} height={48} fill={'red'} />
       </>
     )
   }else {
     return(
       <>
         <Text>{i<9 ? `0${i+1}` : i+1}</Text>
-        <Image alt='Sea Blanck' key={i.x} src={asientoBlank} width={48} height={48} fill={'red'} />
+        <Image alt='Sea Blanck' key={i.x} src='/iconseat.png' width={48} height={48} fill={'red'} />
       </>
     )
   }
 }
 function seleccionarAsiento(i){
-  //Guarda el asiento seleccionado, si se selecciona el mismo lo limpia
+  //Guarda el asiento selecciona, si se selecciona el mismo lo limpia
   if(i === seatSelected) {
     setSeatSelected('');
   }else {

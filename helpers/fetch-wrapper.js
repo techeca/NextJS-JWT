@@ -1,5 +1,5 @@
 import getConfig from 'next/config';
-import { userService } from '../services';
+import { userService, travelsService } from '@services/index';
 
 const { publicRuntimeConfig } = getConfig();
 

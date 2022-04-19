@@ -32,7 +32,6 @@ function logout(){
 }
 
 function getTickets(){
-  //const tmp = parseToken(data);
   return fetchWrapper.get(`${baseUrl}/tickets`);
 }
 

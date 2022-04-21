@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export": "npm run build && next export -o _static"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.8.8",
@@ -18,19 +19,28 @@
     "evergreen-ui": "^6.9.3",
     "express": "^4.17.3",
     "express-jwt": "^6.1.1",
+    "image-trace-loader": "^1.0.2",
+    "imagemin-gifsicle": "^7.0.0",
+    "imagemin-optipng": "^8.0.0",
+    "jimp": "^0.16.1",
     "js-cookie": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
+    "lqip-loader": "^2.2.1",
     "next": "12.1.0",
     "next-auth": "^4.3.1",
+    "next-optimized-images": "^2.6.2",
     "react": "17.0.2",
     "react-datepicker": "^4.7.0",
     "react-device-detect": "^2.1.2",
     "react-dom": "17.0.2",
     "react-hook-form": "^7.28.0",
     "react-hot-toast": "^2.2.0",
+    "responsive-loader": "^2.3.0",
     "rxjs": "^7.5.5",
     "serverless-mysql": "^1.5.4",
+    "svg-sprite-loader": "^6.0.11",
     "util": "^0.12.4",
+    "webp-loader": "^0.6.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {

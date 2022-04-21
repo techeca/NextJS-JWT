@@ -1,5 +1,5 @@
 import { Button, Pane, Text, TextInput, Card, Strong, TextInputField, toaster, Spinner, SideSheet, Heading, Position, IconButton, CrossIcon, Paragraph, TrashIcon, Pagination, Dialog, FormField } from 'evergreen-ui';
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import LoadingComp from '../components/loading'
 import { userService, ticketsService } from '@services/index'
 
@@ -12,7 +12,7 @@ function TicketsOrder(carr){
   const [isShown, setIsShown] = useState(false)
   const [isLogged, setIsLogged] = useState(false)
 
-  const handleLoad = async (e) => {
+  const handleLoad = useCallback((e) => {
     try {
         //Revisamos si esta logeado e insermos carrito con pasajes
             if(userService.userValue){
@@ -28,14 +28,14 @@ function TicketsOrder(carr){
     } finally {
       setIsLoading(false);
     }
-  }
+  }, [carr.carrito])
   //Funcion para eliminar pasajes del carrito
   function removeElement(array, c){
-    let indexP = carrito.carrito.indexOf(c);
+    let indexP = carr.carrito.indexOf(c);
     const newCarr = carritoTry.filter((pasaje) =>  pasaje.code !== c.code);
     setCarritoTry(newCarr);
     //const minusElemt = carrito.carrito.filter((pasaje) => pasaje === c)
-    carrito.rmvElmt(newCarr);
+    carr.rmvElmt(newCarr);
   }
   //helpers
   function generarId(c){
@@ -159,7 +159,7 @@ function TicketsOrder(carr){
 
   useEffect(() => {
     handleLoad()
-  }, []);
+  }, [handleLoad]);
 
     return(
       <>

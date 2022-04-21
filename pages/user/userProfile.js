@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useCallback} from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { useRouter } from 'next/router'
 import { Button, Pane, Text, TextInput, Card, Strong, TextInputField, toaster, Spinner, SideSheet, Heading, Position, IconButton, CrossIcon, Paragraph  } from 'evergreen-ui'
@@ -27,6 +27,9 @@ function User(){
   const handlechange = async (e) => {
     setUserProfile({...userProfile, [e.target.name]: e.target.value})
   }
+  const handleLoad = useCallback(() => {
+
+  }, [])
   //SACAR
   function menuButtons(){
     return(
@@ -39,7 +42,7 @@ function User(){
     )
   }
 
-  async function setUserData(data){
+  const setUserData = useCallback((data) => {
     const u = JSON.parse(data)
     //Inserta los datos del usuario en el useState UserProfile (para formulario)
     userProfile.name = u.name
@@ -47,14 +50,18 @@ function User(){
     userProfile.rut = u.rut
     userProfile.email = u.email
     userProfile.phone = u.phone
-  }
+
+  }, [userProfile])
 
   useEffect(() => {
     //Obtiene los datos guardados al iniciar cuenta
     const usrtmp = localStorage.getItem('user')
-    setUserData(usrtmp).then(setLoading(false))
+    if(usrtmp){
+      setUserData(usrtmp)
+      setLoading(false)
+    }
     //userService.getAll(usrtmp).then(x => setUsers(x));
-  }, [])
+  }, [setUserData])
 
   return (
     <Pane>

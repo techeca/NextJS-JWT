@@ -8,6 +8,9 @@ import Image from 'next/image'
 import DatePicker, {registerLocale} from 'react-datepicker'
 import { getCookies, getCookie, setCookies, removeCookies } from 'cookies-next'
 
+const seatSelect = 'iconseatSelected.png'
+const seatIcon = 'iconseat.png'
+
 function setHourPoint(hour){
   const str = hour.toString().slice(0, 2)+':'+hour.toString().slice(2, 4);
   return (str)
@@ -44,14 +47,14 @@ function seatPack(i){
     return (
       <>
         <Text>{i<9 ? `0${i+1}` : i+1}</Text>
-        <Image alt='Seat' key={i.x} src='/iconseatSelected.png' width={48} height={48} fill={'red'} />
+        <Image alt='Seat' key={i.x} src={seatSelect} width={48} height={48} fill={'red'} />
       </>
     )
   }else {
     return(
       <>
         <Text>{i<9 ? `0${i+1}` : i+1}</Text>
-        <Image alt='Sea Blanck' key={i.x} src='/iconseat.png' width={48} height={48} fill={'red'} />
+        <Image alt='Sea Blanck' key={i.x} src={seatIcon} width={48} height={48} fill={'red'} />
       </>
     )
   }

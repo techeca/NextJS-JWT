@@ -27,7 +27,7 @@ function Register(){
     }else{
       setIsLoading(false)
     }
-  }, [])
+  }, [router])
 
   return (
     <>

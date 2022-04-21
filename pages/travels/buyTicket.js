@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router'
 import { Button, Pane, Text, TextInput, Card, Strong, TextInputField, toaster, Spinner, Combobox, FormField, Table, SideSheet, Heading, Position, IconButton } from 'evergreen-ui'
 import { getCookies, getCookie, setCookies, removeCookies } from 'cookies-next'
@@ -67,21 +67,21 @@ function Tickets(){
   //NECESARIO PARA CARRITO DE TICKETS
   const [carritoTickets, setCarritoTickets] = useState([]) //Guarda los pasajes que quiere comprar el usuario
   //Solicita origenes/destinos y los carga
-  const handleLoad = async (e) => {
+  const handleLoad = useCallback ((e) => {
     try {
-            loadComboBox(e)
+      //Agrega los objetos 1 vez
+      if(origenForm.length>0){
+        console.log('hay objetos')
+      }else {
+        e.origenes.map((origen) => origenForm.push(origen.origen));
+        e.destinos.map((destino) => destinoForm.push(destino.destino));
+      }
     } catch (error) {
       toaster.danger(error)
     }
-  }
+  }, [origenForm, destinoForm])
   function loadComboBox(result){
-    //Agrega los objetos 1 vez
-    if(origenForm.length>0){
-      //console.log('hay objetos')
-    }else {
-      result.origenes.map((origen) => origenForm.push(origen.origen));
-      result.destinos.map((destino) => destinoForm.push(destino.destino));
-    }
+
   }
   //Componente de Panel derecho, muestra Viajes disponibles y al seleccionar uno muestra los detalles
   function PanelLateral(){
@@ -163,7 +163,7 @@ function Tickets(){
 
   useEffect(() => {
       travelsService.getAllTravelsName().then(e => handleLoad(e)).then(setLoading(false))
-  }, [])
+  }, [handleLoad])
 
     return(
       <>

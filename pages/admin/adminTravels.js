@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react';
 import { useRouter } from 'next/router';
 import { Button, Pane, Text, TextInput, Card, Strong, TextInputField, Checkbox, FormField, toaster } from 'evergreen-ui'
 import { getCookies, getCookie, setCookies, removeCookies } from 'cookies-next'
-
+import { userService } from '@services/index'
 
 function Travels(){
   const router = useRouter();
@@ -60,9 +60,12 @@ function Travels(){
   };
 
   useEffect(() => {
-    const token = getCookie('token');
-    if(!token) {router.push('/login')}
-  });
+    if(userService.userValue){
+      router.push('/')
+    }else{
+      setIsLoading(false)
+    }
+  }, [router])
 
   return (
     //Login container

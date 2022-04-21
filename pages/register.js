@@ -10,7 +10,7 @@ function Register(){
   const [isLoading, setIsLoading] = useState(true)
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
       return userService.register(event.target.name.value, event.target.lastName.value, event.target.rut.value, event.target.email.value, event.target.phone.value, event.target.password.value)
         .then(() => {
             const returnUrl = router.query.returnUrl || '/';
@@ -18,8 +18,8 @@ function Register(){
         })
         .catch(error => {
           toaster.danger(error+' ')
-        });
-  };
+        })
+  }
 
   useEffect(() => {
     if(userService.userValue){

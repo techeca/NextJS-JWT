@@ -12,4 +12,8 @@ module.exports = {
      ? 'http://localhost:3000/api' // dev
      : 'http://localhost:3000/api' // production
   },
+  images: {
+    loader:'imgix',
+    path: 'https://jmorrison.imgix.net',
+  },
 }

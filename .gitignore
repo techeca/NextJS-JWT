@@ -34,4 +34,5 @@ yarn-error.log*
 # vercel
 .vercel
 
-#config DB
+#others
+_static

@@ -10,7 +10,7 @@ module.exports = {
   publicRuntimeConfig: {
     apiUrl: process.env.NODE_ENV === 'development'
      ? 'http://192.168.0.3:3000/api' // dev // ip publica
-     : 'http://15.228.54.217:3000/api' // production
+     : 'https://busystem-6t66f.ondigitalocean.app/api' // production
   },
   images: {
     loader:'imgix',

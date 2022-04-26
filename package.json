@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "export": "npm i typescript && npm run build && next export -prod -o _static"
+    "export": "npm i typescript && npm run build && next export -o _static"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.8.8",

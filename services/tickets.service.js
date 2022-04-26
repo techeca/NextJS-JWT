@@ -14,5 +14,5 @@ export const ticketsService = {
 };
 
 function buyTickets(userData, carrito){
-  return fetchWrapper.post(`${baseUrl}/buyTicket`, {userData, carrito})
+  return fetchWrapper.postSn(`${baseUrl}/buyTicket`, {userData, carrito})
     };

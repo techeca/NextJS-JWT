@@ -1,3 +1,22 @@
+## Busystem
+
+Proyecto simple en el que se puede:
+
+Como USUARIO puedes:
+-Comprar Pasajes
+-Ver tus Pasajes comprados
+
+Como ADMINISTRADOR puedes:
+-Ver todos los Pasajes
+-Ver, Bloquear a Usuarios
+-Ver, Crear, Modificar y Eliminar los Viajes
+-Ver, Crear, Modificar y Eliminar los Buses
+
+Verificación con JWT
+En resumen, todas los request realizadas pasan por `helpers/api` el cual se encarga de encapsular las solicitudes y
+agregar la etiqueta `Authorization` para luego realizar una verificación con `express-jwt`, es importante especificar la dirección
+correcta del host de la API en `next.config.js`.
+
 ## Getting Started
 
 Instalar dependencias
@@ -19,82 +38,50 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Páginas
 
 `/` - Home. \
-`/user` - Panel con información de usuario logeado, en caso de no estar logeado redirige a login.\
-`/admin` - Formulario para crear nuevos Viajes.\
+`/user` - Panel con información de usuario logeado.\
+`/user/userTickets` - Pasajes comprados por usuario.\
 `/buyTicket` Formulario para buscar viajes y ver sus detalles.\
-`/login` - Ya tu sabes\
-`/register` - Tambien sabes
+`/login` - Formulario para iniciar sesion.\
+`/register` - Registro de nuevo usuario.\
+`/admin` - Panel de Admin.\
+`/admin/login` - Formulario para iniciar sesion como Admin.
 
 ## Base de Datos MySQL
 
 New DB
 
 ```bash
-CREATE DATABASE busystem;
+link??
 ```
 
-users
+## CONFIG
 
+En `next.config.js` están las variables para la configuración en general.
+
+Para API
 ```bash
-CREATE TABLE `busystem`.`users` (
-  `idUsers` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(20) NOT NULL,
-  `lastName` VARCHAR(20) NOT NULL,
-  `rut` VARCHAR(20) NOT NULL,
-  `phone` INT NULL,
-  `email` VARCHAR(30) NOT NULL,
-  `hash` VARCHAR(60) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idUsers`),
-  UNIQUE INDEX `rut_UNIQUE` (`rut` ASC) VISIBLE,
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE);
+secret: 'SECRET_:O',\
 ```
 
-travels
-
+Para conexion de API DEV/PROD
 ```bash
-CREATE TABLE `busystem`.`travels` (
-  `idtravel` INT NOT NULL AUTO_INCREMENT,
-  `origen` VARCHAR(45) NOT NULL,
-  `destino` VARCHAR(45) NOT NULL,
-  `costoViaje` INT NOT NULL,
-  `limitePasajeros` INT NULL,
-  `horaSalida` INT NOT NULL,
-  `idMaquina` INT NULL,
-  `dias` VARCHAR(120) NOT NULL,
-  PRIMARY KEY (`idtravel`));
+apiUrl: process.env.NODE_ENV === 'development'\
+ ? 'http://localhost:3000/api' // dev
+ : 'https://production/api' // prod
 ```
 
-tickets
-
+Ubicación remota para imagenes, no necesario.
 ```bash
-CREATE TABLE `busystem`.`tickets` (
-  `idTicket` INT NOT NULL AUTO_INCREMENT,
-  `idTravel` INT NOT NULL,
-  `idUser` INT NOT NULL,
-  `nroAsiento` INT NOT NULL,
-  `clase` VARCHAR(15) NULL,
-  `fecha` INT NOT NULL,
-  PRIMARY KEY (`idTicket`));
+loader:'imgix',
+path: 'https://jmorrison.imgix.net',
 ```
 
-## Otros
-
-En `/config` está el archivo `db.js` el cual tiene la configuración para la BD MySQL
-
-```bash
-host: '',
-user: '',
-password: '',
-port: 3306,
-database: ''
-```
+En `_app.js` están las rutas de páginas públicas y protegidas
+En `helpers/api/jwt-middleware` están las rutas de API públicas
 
 ## TODO
 
-Agregar Middleware \
 Agregar Adaptación para celulares \
-Mover variables para encriptar/verificar token \
 Validaciones en general \
 Crear branch mySQL2 \
 Crear branch postgreSQL

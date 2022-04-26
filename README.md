@@ -8,11 +8,11 @@ Como USUARIO puedes:\
 
 Como ADMINISTRADOR puedes:\
 -Ver todos los Pasajes\
--Ver, Bloquear a Usuarios\
+-Ver y Bloquear a Usuarios\
 -Ver, Crear, Modificar y Eliminar los Viajes\
 -Ver, Crear, Modificar y Eliminar los Buses
 
-Verificación con JWT
+Verificación con JWT\
 En resumen, todas los request realizadas pasan por `helpers/api` el cual se encarga de encapsular las solicitudes y verificarlas con `express-jwt`.
 
 ## Getting Started
@@ -47,6 +47,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Base de Datos MySQL
 
 Base de Datos para pruebas alojada en (https://remotemysql.com)
+
+Necesario para `.enc.local`
 
 ```bash
 DB_HOST=remotemysql.com

@@ -96,6 +96,13 @@ Agregar Adaptación para celulares\
 Faltan funciones en panel de ADMIN\
 Cambiar a mysql2
 
+## Imagenes
+
+![1](https://user-images.githubusercontent.com/53408118/165327161-24cd4a27-4175-48ff-a5fd-49915462e6a3.PNG)![2](https://user-images.githubusercontent.com/53408118/165327253-5f9d02de-ed9d-4983-b069-204521d4f46c.PNG)
+![4](https://user-images.githubusercontent.com/53408118/165327279-84e568ba-d634-4a0a-ba62-23330ec9cf46.PNG)
+![3](https://user-images.githubusercontent.com/53408118/165328371-503c61ff-238d-4f00-9b89-aecadb4948e5.PNG)
+
+
 ## More
 
 - [Next.js](https://nextjs.org/docs)

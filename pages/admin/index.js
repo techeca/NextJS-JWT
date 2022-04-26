@@ -82,8 +82,8 @@ function CPanel(){
     //container
     <>
     <Navbar />
-    <Pane  width='100%' height='85vh' border='default' display='flex' alignItems='center' flexDirection='row' justifyContent='center'>
-      <Pane border='default' width='15%' height='85vh' justifyContent='start' flexDirection='column'>
+    <Pane width='100%' height='90vh' border='default' display='flex' alignItems='center' flexDirection='row' justifyContent='center'>
+      <Pane border='default' width='15%' height='90vh' justifyContent='start' flexDirection='column'>
         <Pane >
           <Menu.Group title='CPanel'>
             <Menu.Item icon={HomeIcon} onSelect={() => setPageSelected('dashboard')}>Home</Menu.Item>
@@ -96,13 +96,13 @@ function CPanel(){
           </Menu.Group>
           <Menu.Divider />
         </Pane>
-        <Pane height='69%' display='flex' justifyContent='end' flexDirection='column'>
+        <Pane height='65%' display='flex' justifyContent='end' flexDirection='column'>
         <Menu.Group>
           <Menu.Item icon={SettingsIcon} disabled onSelect={() => toaster.notify('Hello world')}>Settings</Menu.Item>
         </Menu.Group>
         </Pane>
       </Pane>
-      <Pane width='85%'>
+      <Pane width='85%' height='90vh'>
         {handleContentCPanel(pageSelected)}
       </Pane>
     </Pane>

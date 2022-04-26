@@ -38,7 +38,7 @@ function Dashboard(){
 
   return(
     <>
-    <Pane justifyContent='center' display='flex' marginTop={70}>
+    <Pane justifyContent='center' display='flex' marginTop={30}>
     <Heading size={800}>
       Dashboard
     </Heading>
@@ -46,24 +46,52 @@ function Dashboard(){
     {/*pasajes */}
     <Pane >
     <Pane borderRadius={30} display='flex'  flexDirection='column' height='85vh' alignItems='center' justifyContent='start' paddingTop='3%'>
-      <Card elevation={1} width='80%'>
+      <Card elevation={0} border='default' width='80%'>
         <Pane display='flex' flexDirection='row' justifyContent='space-between' margin={20}>
           <Heading color='muted' size={500}>Total de Viajes en Venta</Heading>
-          <Heading marginLeft={15} color='muted' size={600}>0</Heading>
+          <Heading marginLeft={15} color='muted' size={600}>3</Heading>
         </Pane>
       </Card>
-      <Card elevation={1} width='80%' marginTop={30}>
+      <Card elevation={0} border='default' width='80%' marginTop={30}>
         <Pane display='flex' flexDirection='row' justifyContent='space-between' margin={20}>
           <Heading color='muted' size={500}>Total de Usuario Registrados</Heading>
-          <Heading marginLeft={15} color='muted' size={600}>0</Heading>
+          <Heading marginLeft={15} color='muted' size={600}>7</Heading>
         </Pane>
       </Card>
-      <Card elevation={1} width='80%' marginTop={30}>
+      <Card elevation={0} border='default' width='80%' marginTop={30}>
         <Pane display='flex' flexDirection='row' justifyContent='space-between' margin={20}>
           <Heading color='muted' size={500}>Total de Pasajes Comprados</Heading>
-          <Heading marginLeft={15} color='muted' size={600}>0</Heading>
+          <Heading marginLeft={15} color='muted' size={600}>65</Heading>
         </Pane>
       </Card>
+      <Card elevation={0} border='default' width='80%' marginTop={30}>
+        <Pane display='flex' flexDirection='row' justifyContent='space-between' margin={20}>
+          <Heading color='muted' size={500}>Total de Buses Registrados</Heading>
+          <Heading marginLeft={15} color='muted' size={600}>none</Heading>
+        </Pane>
+      </Card>
+
+      <Pane display='flex' flexDirection='row' marginTop={20}>
+      <Card elevation={0} border='default' width='100%' margin={30}>
+        <Pane display='flex' flexDirection='column' alignItems='center' margin={20}>
+          <Heading color='muted' size={500}>Viaje más comprado</Heading>
+          <Heading margin={10} color='muted' size={600}>Desde: Antofagasta Hacias: Tocopilla</Heading>
+        </Pane>
+      </Card>
+      <Card elevation={0} border='default' width='100%' margin={30}>
+        <Pane display='flex' flexDirection='column' alignItems='center' margin={20}>
+          <Heading color='muted' size={500}>Ciudad más solicitada</Heading>
+          <Heading margin={10} color='muted' size={600}>Antofagasta</Heading>
+        </Pane>
+      </Card>
+      <Card elevation={0} border='default' width='100%' margin={30}>
+        <Pane display='flex' flexDirection='column' alignItems='center' margin={20}>
+          <Heading color='muted' size={500}>Usuarios VIP</Heading>
+          <Heading margin={10} color='muted' size={600}>none</Heading>
+        </Pane>
+      </Card>
+      </Pane>
+
     </Pane>
     </Pane>
 

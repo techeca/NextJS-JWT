@@ -200,13 +200,13 @@ function Travels(){
 
   return(
     <>
-    <Pane justifyContent='center' display='flex' marginTop={70}>
+    <Pane justifyContent='center' display='flex' marginTop={20}>
     <Heading size={800}>
       Usuarios Registrados
     </Heading>
     </Pane>
     {/*pasajes */}
-    <Pane display='flex'  flexDirection='column' height='85vh' alignItems='center' justifyContent='start' paddingTop='3%'>
+    <Pane display='flex'  flexDirection='column' height='85vh' alignItems='center' justifyContent='start' paddingTop='2%'>
       <Card elevation={1} width='80%'>
         <Table>
           <Table.Head>
@@ -222,7 +222,7 @@ function Travels(){
               <Table.Row isSelectable key={p.idUsers} onSelect={()  => showUserDet(p)}>
               <Table.TextCell>{p.name}</Table.TextCell>
                 <Table.TextCell>{p.lastName}</Table.TextCell>
-                <Table.TextCell>${p.rut}</Table.TextCell>
+                <Table.TextCell>{p.rut}</Table.TextCell>
                 <Table.TextCell>{p.email}</Table.TextCell>
                 <Table.TextCell>{p.phone}</Table.TextCell>
                 <Table.TextCell></Table.TextCell>
@@ -231,7 +231,9 @@ function Travels(){
           </Table.Body>
         </Table>
       </Card>
-      <Pagination page={page} onPageChange={handlePageChange} totalPages={totalPage}></Pagination>
+      <Pane justifyContent='end' display='flex' flexDirection='column' height='34vh'>
+        <Pagination page={page} onPageChange={handlePageChange} totalPages={totalPage}></Pagination>
+      </Pane>
     </Pane>
     {userDetail(userSelected)}
     {listTicketsPanel(listTickets)}

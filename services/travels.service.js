@@ -17,5 +17,5 @@ function getAllTravelsName(){
 }
 
 function getAllTravels(origen, destino, fecha){
-  return fetchWrapper.post(`${baseUrl}/travelsInfo`, {origen, destino, fecha})
+  return fetchWrapper.postSn(`${baseUrl}/travelsInfo`, {origen, destino, fecha})
 }

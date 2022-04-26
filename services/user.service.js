@@ -17,7 +17,7 @@ export const userService = {
 };
 
 function login(username, password) {
-  return fetchWrapper.post(`${baseUrl}/authenticate`, {username, password})
+  return fetchWrapper.postSn(`${baseUrl}/authenticate`, {username, password})
     .then(user => {
       userSubject.next(user);
       localStorage.setItem('user', JSON.stringify(user));
@@ -36,7 +36,7 @@ function getTickets(){
 }
 
 function register(name, lastName, rut, email, phone, password){
-  return fetchWrapper.post(`${baseUrl}/register`, {name, lastName, rut, email, phone, password})
+  return fetchWrapper.postSn(`${baseUrl}/register`, {name, lastName, rut, email, phone, password})
     .then(user => {
       userSubject.next(user);
       localStorage.setItem('user', JSON.stringify(user));

@@ -17,6 +17,7 @@ function handler(req, res){
 
   async function loginAdmin(){
     const {username, password} = JSON.parse(req.body)
+    //console.log(req.headers)
     //Se encripta la contraseña con bcrypt
     var hash = await bcrypt.hash(password, 10);
     //Query para buscar email en BD
@@ -24,6 +25,7 @@ function handler(req, res){
     const stringdata = JSON.stringify(results)
     const parsedata1 = JSON.parse(stringdata)
     conn.end()
+
     //Si hay resultados
     if(parsedata1.length>0){
         //Guardamos hash de BD

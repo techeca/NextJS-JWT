@@ -6,6 +6,7 @@ const { publicRuntimeConfig } = getConfig();
 export const fetchWrapper = {
   get,
   post,
+  postSn,
   put,
   delete: _delete
 };
@@ -22,7 +23,7 @@ function get(url){
 function post(url, body){
   const requestOptions = {
     method: 'POST',
-    header: { 'Content-Type': 'application/json', ...authHeader(url) },
+    headers: { 'Content-Type': 'application/json', ...authHeader(url) },
     credentials: 'include',
     body: JSON.stringify(body)
   };
@@ -42,6 +43,14 @@ function _delete(){
   const requestOptions = {
     method: 'DELETE',
     headers: authHeader(url)
+  };
+  return fetch(url, requestOptions).then(handleResponse);
+}
+
+function postSn(url, body){
+  const requestOptions = {
+    method: 'POST',
+    body: JSON.stringify(body)
   };
   return fetch(url, requestOptions).then(handleResponse);
 }

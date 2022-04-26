@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }) {
   const authCheck = useCallback((url) => {
     //Paths permitidos para usuario no logeados //pages
      const publicPaths = ['/', '/login', '/register', '/travels/buyTicket', '/admin/login'];
-     const admPaths = ['/admin/newTravel'];
+     const admPaths = ['/admin/'];
      const path = url.split('?')[0];
      if(!userService.userValue && !publicPaths.includes(path)){   //si no está logeado y no está en ruta publica
            if(adminService.adminValue && admPaths.includes(path)){   //está logeado como admin y esta en ruta de admin

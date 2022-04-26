@@ -107,7 +107,7 @@ function Travels(){
             </Pane>
 
             <Pane marginLeft={250} paddingBottom={20} marginTop={-20} >
-              <Button>Ver Pasajes</Button>
+              <Button disabled>Ver Pasajes</Button>
             </Pane>
           </Pane>
           </Pane>
@@ -235,13 +235,13 @@ function Travels(){
 
   return(
     <>
-    <Pane justifyContent='center' display='flex' marginTop={70}>
+    <Pane justifyContent='center' display='flex' marginTop={20}>
     <Heading size={800}>
       Pasajes vendidos
     </Heading>
     </Pane>
     {/*pasajes */}
-    <Pane display='flex'  flexDirection='column' height='85vh' alignItems='center' justifyContent='start' paddingTop='3%'>
+    <Pane display='flex'  flexDirection='column' height='85vh' alignItems='center' justifyContent='start' paddingTop='2%'>
       <Card elevation={1} width='80%'>
         <Table>
           <Table.Head>
@@ -268,7 +268,9 @@ function Travels(){
           </Table.Body>
         </Table>
       </Card>
-      <Pagination page={page} onPageChange={handlePageChange} totalPages={totalPage}></Pagination>
+      <Pane justifyContent='end' display='flex' flexDirection='column' height='34vh'>
+        <Pagination page={page} onPageChange={handlePageChange} totalPages={totalPage}></Pagination>
+      </Pane>
     </Pane>
     {ticketDetail(ticketSelected)}
     {userDetail(userSelected)}

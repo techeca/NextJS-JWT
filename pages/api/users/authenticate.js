@@ -16,6 +16,7 @@ function handler(req, res){
   }
 
   async function authenticate(){
+    //console.log(req.body)
     const {username, password} = JSON.parse(req.body)
     //Se encripta la contraseña con bcrypt
     var hash = await bcrypt.hash(password, 10);
@@ -24,6 +25,7 @@ function handler(req, res){
     const stringdata = JSON.stringify(results)
     const parsedata1 = JSON.parse(stringdata)
     conn.end()
+    
     //Si hay resultados
     if(parsedata1.length>0){
         //Guardamos hash de BD

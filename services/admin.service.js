@@ -21,7 +21,7 @@ export const adminService = {
 };
 
 function loginadm(username, password) {
-  return adminWrapper.post(`${baseUrl}/loginAdmin`, {username, password})
+  return adminWrapper.postSn(`${baseUrl}/loginAdmin`, {username, password})
     .then(admin => {
       adminSubject.next(admin);
       localStorage.setItem('admin', JSON.stringify(admin));

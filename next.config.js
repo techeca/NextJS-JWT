@@ -9,7 +9,7 @@ module.exports = {
   },
   publicRuntimeConfig: {
     apiUrl: process.env.NODE_ENV === 'development'
-     ? 'http://192.168.0.3:3000/api' // dev
+     ? 'http://192.168.0.3:3000/api' // dev // ip publica
      : 'http://15.228.249.123:3000/api' // production
   },
   images: {

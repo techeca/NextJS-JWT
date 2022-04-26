@@ -6,6 +6,7 @@ const { publicRuntimeConfig } = getConfig();
 export const adminWrapper = {
   get,
   post,
+  postSn,
   put,
   delete: _delete
 };
@@ -26,8 +27,6 @@ function post(url, body){
     credentials: 'include',
     body: JSON.stringify(body)
   };
-
-  //console.log(requestOptions)
   return fetch(url, requestOptions).then(handleResponse);
 }
 
@@ -59,6 +58,14 @@ function authHeader(url) {
   }else {
     return {};
   }
+}
+
+function postSn(url, body){
+  const requestOptions = {
+    method: 'POST',
+    body: JSON.stringify(body)
+  };
+  return fetch(url, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response){

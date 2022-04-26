@@ -14,7 +14,7 @@ function Login(){
     e.preventDefault()
       return adminService.loginadm(event.target.email.value, event.target.password.value)
         .then(() => {
-            const returnUrl = router.query.returnUrl || '/admin/newTravel';
+            const returnUrl = router.query.returnUrl || '/admin';
             router.push(returnUrl)
         })
         .catch(error => {

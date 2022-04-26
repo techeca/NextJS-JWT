@@ -39,7 +39,7 @@ function handler(req, res){
       let results = await conn.query('SELECT idUsers, name, lastName, rut, phone, email FROM users WHERE idUsers = ? ', [idUsers]);
       const stringdata = JSON.stringify(results);
       const parsedata = JSON.parse(stringdata);
-      console.log(parsedata)
+      //console.log(parsedata)
       conn.end();
       //Si hay resultados
           //Verificamos que hay viajes ese dia de la semana

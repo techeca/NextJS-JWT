@@ -94,7 +94,9 @@ En `helpers/api/jwt-middleware` están las rutas de API públicas.
 
 Agregar Adaptación para celulares.\
 Faltan funciones en panel de ADMIN.\
-Cambiar a mysql2
+Cambiar a mysql2.\
+Mensajes en validacion dde login de usuario.\
+Validación innecesaria para entrar a login de admin.
 
 ## Imagenes
 

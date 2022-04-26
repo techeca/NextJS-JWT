@@ -17,13 +17,13 @@ En resumen, todas los request realizadas pasan por `helpers/api` el cual se enca
 
 ## Getting Started
 
-Instalar dependencias
+Instalar dependencias.
 
 ```bash
 npm i
 ```
 
-Para pruebas locales
+Para pruebas locales.
 
 ```bash
 npm run dev
@@ -32,6 +32,27 @@ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Base de Datos MySQL
+
+Base de Datos para pruebas alojada en (https://remotemysql.com).
+
+Necesario para `.env.local`.
+
+```bash
+DB_HOST=remotemysql.com
+DB_USER=AwSgxyBf1n
+DB_PASS=lcob4VuM8u
+DB_NAME=AwSgxyBf1n
+API_KEY=4626c7660cb17cca76b21bc5a52f8de133be0f7d44cc2596f6601812d1010edacf920d0e2a90b75222e4f8e6db9b1710c885d97312f229f97189de2720fce442
+```
+
+Cuenta para pruebas.
+
+```bash
+usuario: admin
+contraseña: qweqweqwe
+```
 
 ## Páginas
 
@@ -44,37 +65,16 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 `/admin` - Panel de Admin.\
 `/admin/login` - Formulario para iniciar sesion como Admin.
 
-## Base de Datos MySQL
-
-Base de Datos para pruebas alojada en (https://remotemysql.com)
-
-Necesario para `.enc.local`
-
-```bash
-DB_HOST=remotemysql.com
-DB_USER=AwSgxyBf1n
-DB_PASS=lcob4VuM8u
-DB_NAME=AwSgxyBf1n
-API_KEY=4626c7660cb17cca76b21bc5a52f8de133be0f7d44cc2596f6601812d1010edacf920d0e2a90b75222e4f8e6db9b1710c885d97312f229f97189de2720fce442
-```
-
-Cuenta para pruebas
-
-```bash
-usuario: admin
-contraseña: qweqweqwe
-```
-
 ## CONFIG
 
 En `next.config.js` están las variables para la configuración en general, no es necesario tocar nada para relizar pruebas.
 
-Para API
+Para API KEY.
 ```bash
 secret: 'SECRET_:O'
 ```
 
-Para conexion de API DEV/PROD
+Para conexion de API DEV/PROD.
 ```bash
 apiUrl: process.env.NODE_ENV === 'development'
  ? 'http://localhost:3000/api' // dev
@@ -87,13 +87,13 @@ loader:'imgix',
 path: 'https://jmorrison.imgix.net'
 ```
 
-En `_app.js` están las rutas de páginas públicas y protegidas\
-En `helpers/api/jwt-middleware` están las rutas de API públicas
+En `_app.js` están las rutas de páginas públicas y protegidas.\
+En `helpers/api/jwt-middleware` están las rutas de API públicas.
 
 ## TODO
 
-Agregar Adaptación para celulares\
-Faltan funciones en panel de ADMIN\
+Agregar Adaptación para celulares.\
+Faltan funciones en panel de ADMIN.\
 Cambiar a mysql2
 
 ## More

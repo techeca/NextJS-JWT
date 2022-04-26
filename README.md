@@ -1,6 +1,6 @@
 ## Busystem
 
-Proyecto simple en el que se puede:\
+Proyecto simple en el que se puede:
 
 Como USUARIO puedes:\
 -Comprar Pasajes\
@@ -46,7 +46,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Base de Datos MySQL
 
-Base de Datos para pruebas alojada en (https://remotemysql.com)\
+Base de Datos para pruebas alojada en (https://remotemysql.com)
 
 ```bash
 DB_HOST=remotemysql.com
@@ -74,7 +74,7 @@ secret: 'SECRET_:O'
 
 Para conexion de API DEV/PROD
 ```bash
-apiUrl: process.env.NODE_ENV === 'development'\
+apiUrl: process.env.NODE_ENV === 'development'
  ? 'http://localhost:3000/api' // dev
  : 'https://production/api'    // prod
 ```

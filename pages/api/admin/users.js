@@ -18,7 +18,7 @@ function handler(req, res){
   async function getUsers(){
     try {
       //Query para buscar todos los viajes que tienen el mismo origen y destino seleccionado por el usuario
-      let results = await conn.query('SELECT idUsers, name, lastName, rut, phone, email FROM Users ');
+      let results = await conn.query('SELECT idUsers, name, lastName, rut, phone, email FROM users ');
       const stringdata = JSON.stringify(results);
       const parsedata = JSON.parse(stringdata);
       conn.end();

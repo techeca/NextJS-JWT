@@ -37,7 +37,7 @@ function handler(req, res){
     try {
       //Obtiene los datos de formulario
       const {origen, destino, fecha} = JSON.parse(req.body);
-      console.log(req.body)
+      //console.log(req.body)
       //Query para buscar todos los viajes que tienen el mismo origen y destino seleccionado por el usuario
       let results = await conn.query('SELECT * FROM travels WHERE origen = ? && destino = ?', [origen, destino]);
       const stringdata = JSON.stringify(results);

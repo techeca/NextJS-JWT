@@ -1,7 +1,7 @@
 import '../styles/globals.css'
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router'
-import { userService } from '../services'
+import { userService, adminService } from '../services'
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -9,15 +9,26 @@ function MyApp({ Component, pageProps }) {
 
   const authCheck = useCallback((url) => {
     //Paths permitidos para usuario no logeados //pages
-     const publicPaths = ['/', '/login', '/register', '/travels/buyTicket'];
+     const publicPaths = ['/', '/login', '/register', '/travels/buyTicket', '/admin/login'];
+     const admPaths = ['/admin/newTravel'];
      const path = url.split('?')[0];
-     if(!userService.userValue && !publicPaths.includes(path)){
+     if(!userService.userValue && !publicPaths.includes(path)){   //si no está logeado y no está en ruta publica
+           if(adminService.adminValue && admPaths.includes(path)){   //está logeado como admin y esta en ruta de admin
+             setAuthorized(true);
+           }else {
+             setAuthorized(false);
+             router.push({
+               pathname: '/',
+               query: { returnUrl: router.asPath}
+             });
+           }
+     }else if(!adminService.adminValue && admPaths.includes(path)){
        setAuthorized(false);
        router.push({
-         pathname: '/login',
+         pathname: '/',
          query: { returnUrl: router.asPath}
        });
-     }else {
+     } else {
        setAuthorized(true);
      }
   }, [router])
@@ -26,7 +37,6 @@ function MyApp({ Component, pageProps }) {
     authCheck(router.asPath);
     const hideContent = () => setAuthorized(false);
     router.events.on('routeChangeStart', hideContent);
-
     router.events.on('routeChangeComplete', authCheck);
 
     return () => {
@@ -42,7 +52,6 @@ function MyApp({ Component, pageProps }) {
         <Component {...pageProps} />
       </>
     }
-
     </>
   )
 }

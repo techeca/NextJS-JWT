@@ -28,27 +28,24 @@ function UserTickets(){
     setPage(e);
   }
    const handleLoad = async (e) => {
-       if(e.pasajes.length > 0){
-         try {
-               //Se guardan los pasajes obtenidos
-               setPasajes(e);
-               //Se muestran los datos
-               setIsLoading(false)
-               //Total de objetos divido por 10, que es la misma cantidad que se entrega al paginar
-               setTotalPage(e.pasajes.length/10);
-         } catch (e) {
-           //console.log(e.error);
-           toaster.danger(e.error)
-         }
-       }else {
-         toaster.danger(e.error)
-       }
-   };
-
+     //if(e){console.log('error')}
+     try {
+          //Se guardan los pasajes obtenidos
+          setPasajes(e);
+          //Se muestran los datos
+          setIsLoading(false)
+          //Total de objetos divido por 10, que es la misma cantidad que se entrega al paginar
+          setTotalPage(e.pasajes.length/10);
+     } catch (e) {
+         throw e
+     }
+   }
 
   useEffect(() => {
     //handleLoad();
-    userService.getTickets().then(x => handleLoad(x)).catch((error) => toaster.danger(error))
+      userService.getTickets().then(x => handleLoad(x)).catch((error) => {
+        toaster.danger(error)
+      })
   }, []);
 
   return(

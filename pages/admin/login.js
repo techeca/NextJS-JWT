@@ -2,9 +2,9 @@ import {useState, useEffect} from 'react'
 import { useRouter } from 'next/router'
 import { Button, Pane, Text, TextInput, Card, Strong, toaster, Spinner, IconButton } from 'evergreen-ui'
 import { UserIcon, LogOutIcon, HomeIcon, AirplaneIcon, LogInIcon, NewPersonIcon } from 'evergreen-ui'
-import LoadingComp from './components/loading'
-import HomeButton from './components/homeButton'
-import {userService} from '../services'
+import LoadingComp from '../components/loading'
+import HomeButton from '../components/homeButton'
+import { adminService } from '@services/index'
 
 function Login(){
   const router = useRouter()
@@ -12,9 +12,9 @@ function Login(){
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-      return userService.login(event.target.email.value, event.target.password.value)
-        .then((r) => {
-            const returnUrl = router.query.returnUrl || '/';
+      return adminService.loginadm(event.target.email.value, event.target.password.value)
+        .then(() => {
+            const returnUrl = router.query.returnUrl || '/admin/newTravel';
             router.push(returnUrl)
         })
         .catch(error => {
@@ -23,8 +23,8 @@ function Login(){
   }
 
   useEffect(() => {
-    if(userService.userValue){
-      router.push('/')
+    if(adminService.adminValue){
+      router.push('/admin')
     }else{
       setIsLoading(false)
     }
@@ -47,7 +47,7 @@ function Login(){
         <form onSubmit={handleSubmit}>
         <Card elevation={1} height={300} width='100%' border="default" margin={10} padding={10} display='flex' flexDirection='column' alignItems='center'>
           {/*Title*/}
-          <Strong size={600} marginTop={10}>Login</Strong>
+          <Strong size={600} marginTop={10}>Admin Panel</Strong>
           {/*Input Email*/}
           <TextInput name='email' placeholder='Email' marginTop={50} required/>
           {/*Input Password*/}

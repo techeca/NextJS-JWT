@@ -1,6 +1,7 @@
 export { errorHandler };
 
 function errorHandler(err, res) {
+    
     if (typeof (err) === 'string') {
         // custom application error
         return res.status(400).json({ message: err });
@@ -8,6 +9,7 @@ function errorHandler(err, res) {
 
     if (err.name === 'UnauthorizedError') {
         // jwt authentication error
+        console.log(err)
         return res.status(401).json({ message: 'Invalid Token' });
     }
 

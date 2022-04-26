@@ -1,9 +1,9 @@
 import getConfig from 'next/config';
-import { userService, travelsService, adminService } from '@services/index';
+import { adminService } from '@services/index';
 
 const { publicRuntimeConfig } = getConfig();
 
-export const fetchWrapper = {
+export const adminWrapper = {
   get,
   post,
   put,
@@ -22,10 +22,12 @@ function get(url){
 function post(url, body){
   const requestOptions = {
     method: 'POST',
-    header: { 'Content-Type': 'application/json', ...authHeader(url) },
+    headers: { 'Content-Type': 'application/json', ...authHeader(url) },
     credentials: 'include',
     body: JSON.stringify(body)
   };
+
+  //console.log(requestOptions)
   return fetch(url, requestOptions).then(handleResponse);
 }
 
@@ -35,6 +37,7 @@ function put(url, body){
     headers: { 'Content-Type': 'application/json', ...authHeader(url) },
     body: JSON.stringify(body)
   };
+  //console.log(requestOptions)
   return fetch(url, requestOptions).then(handleResponse);
 }
 
@@ -48,7 +51,7 @@ function _delete(){
 
 //help function
 function authHeader(url) {
-  const user = userService.userValue;
+  const user = adminService.adminValue;
   const isLoggedIn = user && user.token;
   const isApiUrl = url.startsWith(publicRuntimeConfig.apiUrl);
   if(isLoggedIn && isApiUrl) {
@@ -62,8 +65,8 @@ function handleResponse(response){
   return response.text().then(text => {
     const data = text && JSON.parse(text);
     if(!response.ok){
-      if([401, 403].includes(response.status) && userService.userValue){
-        userService.logout();
+      if([401, 403].includes(response.status) && adminService.adminValue){
+        adminService.logoutadm();
       }
       const error = (data && data.message) || response.statusText;
       return Promise.reject(error);

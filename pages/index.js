@@ -25,6 +25,7 @@ export default function Home() {
             <Paragraph size={500}>Sistema de Venta y administración de Viajes y Pasajes.</Paragraph>
           </Pane>
           <Button marginTop={20} onClick={() => router.push('/travels/buyTicket')} appearance='primary'>Comprar pasaje</Button>
+          <Button marginTop={20} onClick={() => router.push('/admin/login')} appearance='primary'>CPanel</Button>
         </Card>
           {/*Footer*/}
           <Pane borderTop height={30} alignItems='center' justifyContent='space-around' display='flex' flexDirection='row'>

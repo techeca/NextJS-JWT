@@ -2,9 +2,9 @@ import {useState, useEffect} from 'react';
 import { useRouter } from 'next/router';
 import { Button, Pane, Text, TextInput, Card, Strong, TextInputField, Checkbox, FormField, toaster } from 'evergreen-ui'
 import { getCookies, getCookie, setCookies, removeCookies } from 'cookies-next'
+import { adminService } from '@services/index'
 
-
-function Travels(){
+function NewTravel(){
   const router = useRouter();
   const [semana, setSemana] = useState({
         lunes: false, martes: false, miercoles: false, jueves: false,
@@ -22,27 +22,17 @@ function Travels(){
           {
             toaster.danger('Debe seleccionar 1 día mínimo')
           }else {
-            const res = await fetch('api/admin', {
-              body:JSON.stringify({
-                info: datosViaje,
-                semana: semana
-              }),
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              method: 'POST'
-            })
-            const result = await res.json()
-
-            if(result.code === 500){
-              toaster.danger(result.message)
-            }else if (result.code == 200) {
-              toaster.success(result.message);
-              //router.push('/login');
+            //return adminService.newTravel(datosViaje, semana)
+            return adminService.newTravel(datosViaje, semana)
+              .then(() => {
+                  toaster.success('Viaje nuevo ingresado')
+              })
+              .catch(error => {
+                toaster.danger(error+' ')
+              });
             }
-          }
         }else {
-          toaster.danger('El límite de pasaeros debe ser 40 o menos');
+          toaster.danger('El límite de pasajeros debe ser 40 o menos');
         }
       }else {
         toaster.danger('Origen y Destino deben ser diferentes')
@@ -60,13 +50,13 @@ function Travels(){
   };
 
   useEffect(() => {
-    const token = getCookie('token');
-    if(!token) {router.push('/login')}
+    //const token = getCookie('token');
+    //if(!token) {router.push('/login')}
   });
 
   return (
     //Login container
-    <Pane width='100%' height='100vh' border='default' display='flex' alignItems='center' flexDirection='column' justifyContent='center'>
+    <Pane width='100%' height='85vh' border='default' display='flex' alignItems='center' flexDirection='column' justifyContent='center'>
       <form onSubmit={handleSubmit}>
       {/*Login form*/}
         <Card elevation={1} height='100%' width='100%' border="default" padding={30} display='flex' flexDirection='column' alignItems='center'>
@@ -104,4 +94,4 @@ function Travels(){
   );
 }
 
-export default Travels
+export default NewTravel

@@ -37,7 +37,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 Base de Datos para pruebas alojada en (https://remotemysql.com).
 
-Necesario para `.env.local`.
+Crear archivo `.env.local` con los datos para la conexión de la base de datos.
 
 ```bash
 DB_HOST=remotemysql.com
@@ -100,7 +100,8 @@ Validación innecesaria para entrar a login de admin.
 
 ## Imagenes
 
-![1](https://user-images.githubusercontent.com/53408118/165327161-24cd4a27-4175-48ff-a5fd-49915462e6a3.PNG)![2](https://user-images.githubusercontent.com/53408118/165327253-5f9d02de-ed9d-4983-b069-204521d4f46c.PNG)
+![1](https://user-images.githubusercontent.com/53408118/165327161-24cd4a27-4175-48ff-a5fd-49915462e6a3.PNG)
+![2](https://user-images.githubusercontent.com/53408118/165327253-5f9d02de-ed9d-4983-b069-204521d4f46c.PNG)
 ![4](https://user-images.githubusercontent.com/53408118/165327279-84e568ba-d634-4a0a-ba62-23330ec9cf46.PNG)
 ![3](https://user-images.githubusercontent.com/53408118/165328371-503c61ff-238d-4f00-9b89-aecadb4948e5.PNG)
 

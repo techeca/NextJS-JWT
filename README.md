@@ -1,15 +1,15 @@
 ## Busystem
 
-Proyecto simple en el que se puede:
+Proyecto simple en el que se puede:\
 
-Como USUARIO puedes:
--Comprar Pasajes
+Como USUARIO puedes:\
+-Comprar Pasajes\
 -Ver tus Pasajes comprados
 
-Como ADMINISTRADOR puedes:
--Ver todos los Pasajes
--Ver, Bloquear a Usuarios
--Ver, Crear, Modificar y Eliminar los Viajes
+Como ADMINISTRADOR puedes:\
+-Ver todos los Pasajes\
+-Ver, Bloquear a Usuarios\
+-Ver, Crear, Modificar y Eliminar los Viajes\
 -Ver, Crear, Modificar y Eliminar los Buses
 
 Verificación con JWT
@@ -56,29 +56,36 @@ DB_NAME=AwSgxyBf1n
 API_KEY=4626c7660cb17cca76b21bc5a52f8de133be0f7d44cc2596f6601812d1010edacf920d0e2a90b75222e4f8e6db9b1710c885d97312f229f97189de2720fce442
 ```
 
+Cuenta para pruebas
+
+```bash
+usuario: admin
+contraseña: qweqweqwe
+```
+
 ## CONFIG
 
-En `next.config.js` están las variables para la configuración en general.
+En `next.config.js` están las variables para la configuración en general, no es necesario tocar nada para relizar pruebas.
 
 Para API
 ```bash
-secret: 'SECRET_:O',\
+secret: 'SECRET_:O'
 ```
 
 Para conexion de API DEV/PROD
 ```bash
 apiUrl: process.env.NODE_ENV === 'development'\
  ? 'http://localhost:3000/api' // dev
- : 'https://production/api' // prod
+ : 'https://production/api'    // prod
 ```
 
 Ubicación remota para imagenes, no necesario.
 ```bash
 loader:'imgix',
-path: 'https://jmorrison.imgix.net',
+path: 'https://jmorrison.imgix.net'
 ```
 
-En `_app.js` están las rutas de páginas públicas y protegidas
+En `_app.js` están las rutas de páginas públicas y protegidas\
 En `helpers/api/jwt-middleware` están las rutas de API públicas
 
 ## TODO

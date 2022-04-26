@@ -13,9 +13,7 @@ Como ADMINISTRADOR puedes:
 -Ver, Crear, Modificar y Eliminar los Buses
 
 Verificación con JWT
-En resumen, todas los request realizadas pasan por `helpers/api` el cual se encarga de encapsular las solicitudes y
-agregar la etiqueta `Authorization` para luego realizar una verificación con `express-jwt`, es importante especificar la dirección
-correcta del host de la API en `next.config.js`.
+En resumen, todas los request realizadas pasan por `helpers/api` el cual se encarga de encapsular las solicitudes y verificarlas con `express-jwt`.
 
 ## Getting Started
 
@@ -48,10 +46,14 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Base de Datos MySQL
 
-New DB
+Base de Datos para pruebas alojada en (https://remotemysql.com)\
 
 ```bash
-link??
+DB_HOST=remotemysql.com
+DB_USER=AwSgxyBf1n
+DB_PASS=lcob4VuM8u
+DB_NAME=AwSgxyBf1n
+API_KEY=4626c7660cb17cca76b21bc5a52f8de133be0f7d44cc2596f6601812d1010edacf920d0e2a90b75222e4f8e6db9b1710c885d97312f229f97189de2720fce442
 ```
 
 ## CONFIG
@@ -81,11 +83,9 @@ En `helpers/api/jwt-middleware` están las rutas de API públicas
 
 ## TODO
 
-Agregar Adaptación para celulares \
-Validaciones en general \
-Crear branch mySQL2 \
-Crear branch postgreSQL
-
+Agregar Adaptación para celulares\
+Faltan funciones en panel de ADMIN\
+Cambiar a mysql2
 
 ## More
 
@@ -93,4 +93,4 @@ Crear branch postgreSQL
 - [Evergreen](https://evergreen.segment.com)
 - [Datepicker](https://reactdatepicker.com)
 - [react-device-detect](https://github.com/duskload/react-device-detect)
-- [ServerlessMySQL](https://github.com/jeremydaly/serverless-mysql)
+- [Express-JWT](https://github.com/auth0/express-jwt)

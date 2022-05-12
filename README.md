@@ -37,20 +37,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 Base de Datos para pruebas alojada en (https://remotemysql.com).
 
-Crear archivo `.env.local` con los datos para la conexión de la base de datos.
-
-```bash
-DB_HOST=remotemysql.com
-DB_USER=AwSgxyBf1n
-DB_PASS=lcob4VuM8u
-DB_NAME=AwSgxyBf1n
-API_KEY=4626c7660cb17cca76b21bc5a52f8de133be0f7d44cc2596f6601812d1010edacf920d0e2a90b75222e4f8e6db9b1710c885d97312f229f97189de2720fce442
-```
-
 Cuenta para pruebas.
 
 ```bash
-usuario: admin
+usuario: admin@admin.com
 contraseña: qweqweqwe
 ```
 

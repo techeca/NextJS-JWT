@@ -90,7 +90,7 @@ path: 'https://jmorrison.imgix.net'
 En `_app.js` están las rutas de páginas públicas y protegidas.\
 En `helpers/api/jwt-middleware` están las rutas de API públicas.
 
-## TODO
+## Falta
 
 Agregar Adaptación para celulares.\
 Faltan funciones en panel de ADMIN.\

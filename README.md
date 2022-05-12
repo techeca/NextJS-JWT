@@ -35,8 +35,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Base de Datos MySQL
 
-Base de Datos para pruebas alojada en (https://remotemysql.com).
-
 Crear archivo `.env.local` con los datos para la conexión de la base de datos.
 
 ```bash
@@ -90,7 +88,7 @@ path: 'https://jmorrison.imgix.net'
 En `_app.js` están las rutas de páginas públicas y protegidas.\
 En `helpers/api/jwt-middleware` están las rutas de API públicas.
 
-## TODO
+## Falta
 
 Agregar Adaptación para celulares.\
 Faltan funciones en panel de ADMIN.\
@@ -113,3 +111,4 @@ Validación innecesaria para entrar a login de admin.
 - [Datepicker](https://reactdatepicker.com)
 - [react-device-detect](https://github.com/duskload/react-device-detect)
 - [Express-JWT](https://github.com/auth0/express-jwt)
+- [RemoteMySQL](https://remotemysql.com)

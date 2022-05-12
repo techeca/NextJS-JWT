@@ -13,7 +13,6 @@ Como ADMINISTRADOR puedes:\
 -Ver, Crear, Modificar y Eliminar los Buses
 
 Verificación con JWT\
-En resumen, todas los request realizadas pasan por `helpers/api` el cual se encarga de encapsular las solicitudes y verificarlas con `express-jwt`.
 
 ## Getting Started
 
@@ -36,6 +35,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Base de Datos MySQL
 
 Base de Datos para pruebas alojada en (https://remotemysql.com).
+##Nota: Para entrar a CPanel debe estar logeado como usuario y admin.
 
 Cuenta para pruebas.
 
@@ -55,38 +55,13 @@ contraseña: qweqweqwe
 `/admin` - Panel de Admin.\
 `/admin/login` - Formulario para iniciar sesion como Admin.
 
-## CONFIG
-
-En `next.config.js` están las variables para la configuración en general, no es necesario tocar nada para relizar pruebas.
-
-Para API KEY.
-```bash
-secret: 'SECRET_:O'
-```
-
-Para conexion de API DEV/PROD.
-```bash
-apiUrl: process.env.NODE_ENV === 'development'
- ? 'http://localhost:3000/api' // dev
- : 'https://production/api'    // prod
-```
-
-Ubicación remota para imagenes, no necesario.
-```bash
-loader:'imgix',
-path: 'https://jmorrison.imgix.net'
-```
-
-En `_app.js` están las rutas de páginas públicas y protegidas.\
-En `helpers/api/jwt-middleware` están las rutas de API públicas.
-
 ## Falta
 
-Agregar Adaptación para celulares.\
+Adaptar para celulares.\
 Faltan funciones en panel de ADMIN.\
 Cambiar a mysql2.\
-Mensajes en validacion dde login de usuario.\
-Validación innecesaria para entrar a login de admin.
+Mensajes en validacion de login de usuario.\
+Validación innecesaria para entrar a login de admin(Sacar de rutas protegidas).
 
 ## Imagenes
 

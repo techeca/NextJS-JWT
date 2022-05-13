@@ -80,9 +80,6 @@ function Tickets(){
       toaster.danger(error)
     }
   }, [origenForm, destinoForm])
-  function loadComboBox(result){
-
-  }
   //Componente de Panel derecho, muestra Viajes disponibles y al seleccionar uno muestra los detalles
   function PanelLateral(){
     return (
@@ -100,7 +97,6 @@ function Tickets(){
       </SideSheet>
     )
   }
-
   //Funcion para mostrar/guardar los detalles del pasaje seleccionado por el usuario
   const showTravelDetail = async (travel) => {
     travelSelected.info = travel;
@@ -108,7 +104,6 @@ function Tickets(){
     //setTravelSelected(travel);
     setControlTravelInfo(true);
   }
-
   //Helpers
   function hideTravelDetail(){
       setControlTravelInfo(false);

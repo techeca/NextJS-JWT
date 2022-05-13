@@ -10,7 +10,7 @@ module.exports = {
   publicRuntimeConfig: {
     apiUrl: process.env.NODE_ENV === 'development'
      ? 'http://localhost:3000/api' // dev // ip publica
-     : 'https://busystem.vercel.app/' // production
+     : 'https://busystem.vercel.app/api' // production
   },
   images: {
     loader:'imgix',

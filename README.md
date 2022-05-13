@@ -16,16 +16,9 @@ Verificación con JWT
 
 DEMO: https://busystem.vercel.app/
 
-## Pruebas locales
+## Pruebas
 
-```bash
-npm i
-npm run dev
-```
-
-[http://localhost:3000](http://localhost:3000)
-
-Cuenta para pruebas(admin y user)
+Cuenta(admin y user)
 
 ```bash
 usuario: admin@admin.com

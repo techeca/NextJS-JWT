@@ -12,7 +12,7 @@ Como ADMINISTRADOR:\
 -Ver, Crear, Modificar y Eliminar los Viajes.\
 -Ver, Crear, Modificar y Eliminar los Buses.(todavía no)
 
-Verificación con JWT\
+Verificación con JWT
 
 DEMO: https://busystem.vercel.app/
 

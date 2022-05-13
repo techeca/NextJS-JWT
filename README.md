@@ -2,49 +2,41 @@
 
 Proyecto simple en el que se puede:
 
-Como USUARIO puedes:\
--Comprar Pasajes\
--Ver tus Pasajes comprados
+Como USUARIO:\
+-Comprar Pasajes.\
+-Ver tus Pasajes comprados.
 
-Como ADMINISTRADOR puedes:\
--Ver todos los Pasajes\
--Ver y Bloquear a Usuarios\
--Ver, Crear, Modificar y Eliminar los Viajes\
--Ver, Crear, Modificar y Eliminar los Buses
+Como ADMINISTRADOR:\
+-Ver todos los Pasajes.\
+-Ver y Bloquear a Usuarios.\
+-Ver, Crear, Modificar y Eliminar los Viajes.\
+-Ver, Crear, Modificar y Eliminar los Buses.(todavía no)
 
 Verificación con JWT\
 
-## Getting Started
+DEMO: https://busystem.vercel.app/
 
-Instalar dependencias.
+## Pruebas locales
 
 ```bash
 npm i
-```
-
-Para pruebas locales.
-
-```bash
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+[http://localhost:3000](http://localhost:3000)
 
 ## Base de Datos MySQL
 
 Base de Datos para pruebas alojada en (https://remotemysql.com).\
 
-
-Cuenta para pruebas.
+Cuenta para pruebas(admin y user)
 
 ```bash
 usuario: admin@admin.com
 contraseña: qweqweqwe
 ```
 
-Nota: Para entrar a CPanel de pasajes debe estar logeado como usuario y admin.
+Nota: Para entrar a CPanel debe estar logeado como usuario y admin.
 
 ## Páginas
 
@@ -63,7 +55,12 @@ Adaptar para celulares.\
 Faltan funciones en panel de ADMIN.\
 Cambiar a mysql2.\
 Mensajes en validacion de login de usuario.\
-Validación innecesaria para entrar a login de admin(Sacar de rutas protegidas).
+Validación innecesaria para entrar a login de admin(Sacar de rutas protegidas).\
+Validaciones al comprar y mostrar asientos disponibles.\
+Estados de viaje.\
+Cambiar imagenes a rutas locales.\
+Validar selección de fecha al buscar pasaje.
+
 
 ## Imagenes
 
@@ -78,6 +75,5 @@ Validación innecesaria para entrar a login de admin(Sacar de rutas protegidas).
 - [Next.js](https://nextjs.org/docs)
 - [Evergreen](https://evergreen.segment.com)
 - [Datepicker](https://reactdatepicker.com)
-- [react-device-detect](https://github.com/duskload/react-device-detect)
 - [Express-JWT](https://github.com/auth0/express-jwt)
 - [RemoteMySQL](https://remotemysql.com)

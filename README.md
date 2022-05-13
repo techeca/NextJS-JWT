@@ -25,10 +25,6 @@ npm run dev
 
 [http://localhost:3000](http://localhost:3000)
 
-## Base de Datos MySQL
-
-Base de Datos para pruebas alojada en (https://remotemysql.com).\
-
 Cuenta para pruebas(admin y user)
 
 ```bash
@@ -37,6 +33,10 @@ contraseña: qweqweqwe
 ```
 
 Nota: Para entrar a CPanel debe estar logeado como usuario y admin.
+
+## Base de Datos MySQL
+
+Base de Datos para pruebas alojada en (https://remotemysql.com).\
 
 ## Páginas
 
